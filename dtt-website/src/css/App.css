@@ -1,0 +1,45 @@
+.container {
+    padding: 15px;
+}
+
+.content {
+    padding: 25px 15px 25px 15px;
+    border-top-style: solid;
+    border-bottom-style: solid;
+    border-color: teal;
+}
+
+.App-logo {
+    margin: 25px 0 25px 0;
+}
+
+/* Article */
+.article {
+    display: flex;
+    flex-direction: row;
+}
+
+.article-left {
+    display: flex;
+    flex: 1;
+}
+
+.article-right {
+    display: flex;
+    flex: 14;
+    flex-direction: column;
+}
+
+.article-title a {
+    color: inherit;
+    text-decoration: inherit;
+}
+
+.publish-date {
+    color: red;
+    padding-top: 5px;
+}
+
+.article h3 {
+    color: orange;
+}

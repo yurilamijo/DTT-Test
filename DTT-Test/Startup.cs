@@ -24,10 +24,25 @@ namespace DTT_Test
 
         public IConfiguration Configuration { get; }
 
+        readonly string MyAllowSpecificOrigins = "ReactWebsite";
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<DTTContext>();
+            services.AddCors(options =>
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:3000")
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
+                    }
+                )
+            );
+
+            services.AddDbContext<DTTContext>(options =>
+                options.UseMySQL(Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddControllers();
         }
 
@@ -39,9 +54,14 @@ namespace DTT_Test
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(MyAllowSpecificOrigins);
 
             app.UseAuthorization();
 
