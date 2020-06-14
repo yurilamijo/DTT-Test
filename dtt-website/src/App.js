@@ -42,17 +42,21 @@ class App extends React.Component {
         // </div>
       // </div>
       <Router>
-          <div className="header">
-            <img src={logo} className="App-logo" alt="logo" />
-          </div>
-          <Switch>
-            <Route path='/' component={Home}/>
-            <Route path='/Info' component={Info}/>
-            <Route path='/Archive' component={Archive}/>
-            <Route path='/Admin' component={Admin}/>
-          </Switch>
-          <div className="footer">
-            <p>DTT Multiemedia 2015. All rights reserved. <a href="admin">Site Admin</a></p>
+          <div className="container">
+            <div className="header">
+              <a href='/'><img src={logo} className="App-logo" alt="logo" /></a>
+            </div>
+            <div className="content">
+            <Switch>
+              <Route path='/' exact component={Home}/>
+              <Route path='/info' component={Info}/>
+              <Route path='/archive' component={Archive}/>
+              <Route path='/admin' component={Admin}/>
+            </Switch>
+            </div>
+            <div className="footer">
+              <p>DTT Multiemedia 2015. All rights reserved. <a href="admin">Site Admin</a></p>
+            </div>
           </div>
       </Router>
     );

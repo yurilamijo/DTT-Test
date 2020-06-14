@@ -25,14 +25,12 @@ class Home extends React.Component {
     );
 
     return (
-      <div className="container">
-        <div className="content">
+        <div>
           {ArticleComponent}
-          <Link to="/Archive">
+          <Link to="/archive">
             <p>Article Archive</p>
           </Link>
         </div>
-      </div>
     );
   }
 }
