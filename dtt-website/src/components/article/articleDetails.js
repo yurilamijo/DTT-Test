@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-class Info extends React.Component {
+class Article extends React.Component {
     constructor(props) {
         super (props);
         this.state = { article: []};
@@ -28,7 +28,7 @@ class Info extends React.Component {
             <div>
                 <h1>{title}</h1>
                 <p>{description}</p>
-                <p>{publishDate}</p>
+                <p className="publishdate">{publishDate}</p>
                 <Link to = "/">
                     <p> Return to Homepage </p> 
                 </Link> 
@@ -37,4 +37,4 @@ class Info extends React.Component {
     }
 }
 
-export default Info
+export default Article

@@ -1,11 +1,13 @@
 import React from 'react';
-import {Link, withRouter} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
+import '../../css/form.css'
 
 class ArticleForm extends React.Component {
     constructor(props) {
         super (props);
         this.state = {
             title: '',
+            summary: '',
             description: '',
             publishDate: '',
             isArchived: 'N',
@@ -75,7 +77,7 @@ class ArticleForm extends React.Component {
     }
 
     render() {
-        const {title, description, publishDate} = this.state;
+        const {title, summary, description, publishDate} = this.state;
         const { match: { params } } = this.props;
 
         let pageTitle, deleteLink;
@@ -95,10 +97,10 @@ class ArticleForm extends React.Component {
                         <p>Article Title</p>
                         <input className="form-input" name="title" type="text" value={title} required onChange={this.handleChange}/>
                     </label>
-                    {/* <label>
+                    <label>
                         <p>Article Summary</p>
                         <textarea className="form-input" name="summary" type="text" value={summary} required onChange={this.handleChange}></textarea>
-                    </label> */}
+                    </label>
                     <label>
                         <p>Article Content</p>
                         <textarea className="form-input" name="description" type="text" value={description} required onChange={this.handleChange}></textarea>

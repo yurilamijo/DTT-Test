@@ -33,6 +33,12 @@ namespace DTT_Test.Models
 
                 entity.Property(e => e.Description)
                     .IsRequired()
+                    .HasColumnName("summary")
+                    .HasMaxLength(150)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Description)
+                    .IsRequired()
                     .HasColumnName("description")
                     .HasMaxLength(225)
                     .IsUnicode(false);

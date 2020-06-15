@@ -1,12 +1,12 @@
 import React from 'react';
 import logo from './logo.png';
-import './css/App.css';
-import Home from './home';
-import Archive from './archive';
-import Admin from './admin';
-import Info from './info';
-import ArticleForm from './components/articleForm';
+import Home from './components/home';
+import Archive from './components/archive';
+import Admin from './components/admin';
+import Article from './components/article/articleDetails';
+import ArticleForm from './components/article/articleForm';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import './css/App.css';
 
 class App extends React.Component {
   
@@ -21,7 +21,7 @@ class App extends React.Component {
             <div className="content">
             <Switch>
               <Route path='/' exact component={Home}/>
-              <Route path='/article/:id' component={Info}/>
+              <Route path='/article/:id' component={Article}/>
               <Route path='/archive' component={Archive}/>
               <Route path='/admin' component={Admin}/>
               <Route path='/edit-article/:id' component={ArticleForm}/>

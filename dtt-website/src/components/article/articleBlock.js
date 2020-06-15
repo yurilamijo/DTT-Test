@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-class Article extends React.Component {
+class ArticleBlock extends React.Component {
     render() {
         const { id, date, title, desc } = this.props;
 
@@ -11,7 +11,7 @@ class Article extends React.Component {
         return (
             <div className="article" id={id}>
                 <div className="article-left">
-                    <p className="publish-date">{day} {month}</p>
+                    <p className="publishdate">{day} {month}</p>
                 </div>
                 <div className="article-right">
                     <h3 className="article-title"><Link to={`/article/${id}`}>{title}</Link></h3>
@@ -22,4 +22,4 @@ class Article extends React.Component {
     }
 }
 
-export default Article;
+export default ArticleBlock;

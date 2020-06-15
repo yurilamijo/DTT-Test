@@ -8,6 +8,7 @@ namespace DTT_Test.Models
     {
         public int Id { get; set; }
         public string Title { get; set; }
+        public string Summary { get; set; }
         public string Description { get; set; }
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime PublishDate { get; set; }

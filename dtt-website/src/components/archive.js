@@ -1,11 +1,13 @@
 import React from 'react';
-import Article from './components/article';
+import ArticleBlock from './article/articleBlock';
 import { Link } from 'react-router-dom';
 
 class Archive extends React.Component {
-
-    state = {
-        archive: []
+    constructor(props) {
+        super (props);
+        this.state = {
+            archive: []
+        }
     }
 
     componentDidMount() {
@@ -18,7 +20,7 @@ class Archive extends React.Component {
 
     render() {
         const ArticleComponent = this.state.archive.map((article, i) =>
-            <Article key={i} id={article.id} date={article.publishDate} title={article.title} desc={article.description}/>
+            <ArticleBlock key={i} id={article.id} date={article.publishDate} title={article.title} desc={article.description}/>
         );
   
         return ( 
