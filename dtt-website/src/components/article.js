@@ -1,11 +1,12 @@
-import React from 'react'
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 class Article extends React.Component {
     render() {
-        const { id, date, title, desc } = this.props
+        const { id, date, title, desc } = this.props;
 
-        const dateTimeFormat = new Intl.DateTimeFormat('en', { year: 'numeric', month: 'long', day: '2-digit' }) 
-        const [{value:month},, {value:day}] = dateTimeFormat.formatToParts(new Date(date))
+        const dateTimeFormat = new Intl.DateTimeFormat('en', { year: 'numeric', month: 'long', day: '2-digit' }); 
+        const [{value:month},, {value:day}] = dateTimeFormat.formatToParts(new Date(date));
 
         return (
             <div className="article" id={id}>
@@ -13,7 +14,7 @@ class Article extends React.Component {
                     <p className="publish-date">{day} {month}</p>
                 </div>
                 <div className="article-right">
-                    <h3 className="article-title"><a href="info">{title}</a></h3>
+                    <h3 className="article-title"><Link to={`/article/${id}`}>{title}</Link></h3>
                     <p>{desc}</p>
                 </div>
             </div>

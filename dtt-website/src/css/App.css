@@ -43,3 +43,79 @@
 .article h3 {
     color: orange;
 }
+
+/* Admin Table */
+table {
+    width: 100%;    
+}
+
+th {
+    background-color: orange;
+    color: white;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+.articles-overview td:nth-child(1) {
+    width: 25%;
+}
+
+.articles-overview tr:nth-child(odd) {
+    background-color: lightgoldenrodyellow;
+}
+
+.articles-overview tr:hover {background-color: #ddd;}
+
+/* Form */
+.article-form h1 {
+    color: orange;
+}
+
+.form-article {
+    background-color: wheat;
+    padding: 25px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);;
+    border-radius: 5px;
+    margin-bottom: 25px;
+}
+
+.form-article label {
+    display: flex;
+    /* height: 2em; */
+    margin: 20px 0 20px 0;
+}
+
+.form-article label p {
+    flex: 1;
+    text-align: end;
+    margin: 0 10px 0 0;
+}
+
+.form-input {
+    flex: 6;
+    border-radius: 5px;
+    background-color: lightcyan;
+}
+
+textarea {
+    height: 100px;
+}
+
+.form-footer {
+    display: flex;
+    justify-content: center;
+}
+
+.form-footer button {
+    padding: 10px;
+    margin: 0 10px 0 10px;
+    width: 120px;
+    color: white;
+    font-weight: bold;
+    background-color: orange;
+    border-radius: 5px;
+    border-color: black;
+}

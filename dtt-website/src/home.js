@@ -1,36 +1,40 @@
 import React from 'react';
 import './css/App.css';
 import Article from './components/article';
-import { Link } from 'react-router-dom';
+import {
+  Link
+} from 'react-router-dom';
 
 class Home extends React.Component {
-  
+
   state = {
     articles: []
   }
 
   componentDidMount() {
-    fetch("https://localhost:5001/api/articles")
-    .then(response => response.json())
-    .then((data) => this.setState({ articles: data }))
-    .catch(
-      error => console.log(error)
-    )
+    fetch("https://localhost:5001/api/home/articles")
+      .then(response => response.json())
+      .then((data) => this.setState(
+        { articles: data }
+      ))
+      .catch(
+        error => console.log(error)
+      )
   }
 
-  render(){
+  render() {
 
     const ArticleComponent = this.state.articles.map((article, i) =>
       <Article key={i} id={article.id} date={article.publishDate} title={article.title} desc={article.description}/>
     );
 
-    return (
-        <div>
-          {ArticleComponent}
-          <Link to="/archive">
-            <p>Article Archive</p>
-          </Link>
-        </div>
+    return ( 
+      <div> 
+        {ArticleComponent} 
+        <Link to = "/archive">
+          <p> Article Archive </p> 
+        </Link> 
+      </div>
     );
   }
 }
