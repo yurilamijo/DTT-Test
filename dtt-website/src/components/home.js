@@ -12,7 +12,7 @@ class Home extends React.Component {
   }
 
   componentDidMount() {
-    fetch("https://localhost:5001/api/home/articles")
+    fetch("https://localhost:5001/api/articles")
       .then(response => response.json())
       .then((data) => this.setState(
         { articles: data }
@@ -24,7 +24,7 @@ class Home extends React.Component {
 
   render() {
     const ArticleComponent = this.state.articles.map((article, i) =>
-      <ArticleBlock key={i} id={article.id} date={article.publishDate} title={article.title} desc={article.description}/>
+      <ArticleBlock key={i} id={article.id} date={article.publishDate} title={article.title} desc={article.summary}/>
     );
 
     return ( 

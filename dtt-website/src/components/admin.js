@@ -8,7 +8,7 @@ class Admin extends React.Component {
     }
     
     componentDidMount() {
-        fetch("https://localhost:5001/api/articles")
+        fetch("https://localhost:5001/api/archive")
           .then(response => response.json())
           .then((data) => this.setState(
             { articles: data }

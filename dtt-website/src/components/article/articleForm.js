@@ -9,8 +9,7 @@ class ArticleForm extends React.Component {
             title: '',
             summary: '',
             description: '',
-            publishDate: '',
-            isArchived: 'N',
+            publishDate: ''
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -36,11 +35,7 @@ class ArticleForm extends React.Component {
         const value = target.value;
         const name = target.name;
 
-        this.setState(
-            { 
-                [name]: value 
-            }
-        );
+        this.setState({ [name]: value });
     }
 
     submitArticle(event) {

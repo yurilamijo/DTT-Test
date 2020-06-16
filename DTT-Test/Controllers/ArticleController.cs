@@ -20,8 +20,8 @@ namespace DTT_Test.Controllers
             _context = context;
         }
 
-        // GET: api/Article
-        [HttpGet("/api/articles")]
+        // GET: api/Archive
+        [HttpGet("/api/archive")]
         public async Task<ActionResult<IEnumerable<Article>>> GetArticle()
         {
             return await _context.Article
@@ -29,23 +29,13 @@ namespace DTT_Test.Controllers
                 .ToListAsync();
         }
 
-        // GET: api/Home
-        [HttpGet("/api/home/articles")]
+        // GET: api/articles
+        [HttpGet("/api/articles")]
         public async Task<ActionResult<IEnumerable<Article>>> GetSumOfArticle()
         {
             return await _context.Article
                 .OrderByDescending(a => a.PublishDate)
                 .Take(5)
-                .ToListAsync();
-        }
-
-        // GET: api/Archived
-        [HttpGet("/api/archived")]
-        public async Task<ActionResult<IEnumerable<Article>>> GetArchived()
-        {
-            return await _context.Article
-                .Where(a => a.IsArchived.Equals('Y'))
-                .OrderByDescending(a => a.PublishDate)
                 .ToListAsync();
         }
 

@@ -23,7 +23,7 @@ class App extends React.Component {
               <Route path='/' exact component={Home}/>
               <Route path='/article/:id' component={Article}/>
               <Route path='/archive' component={Archive}/>
-              <Route path='/admin' component={Admin}/>
+              <Route path='/admin' exact component={Admin}/>
               <Route path='/edit-article/:id' component={ArticleForm}/>
               <Route path='/add-article' component={ArticleForm}/>
             </Switch>

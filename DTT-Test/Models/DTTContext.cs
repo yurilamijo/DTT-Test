@@ -43,13 +43,6 @@ namespace DTT_Test.Models
                     .HasMaxLength(225)
                     .IsUnicode(false);
 
-                entity.Property(e => e.IsArchived)
-                    .IsRequired()
-                    .HasColumnName("isArchived")
-                    .HasColumnType("char")
-                    .HasMaxLength(3)
-                    .IsFixedLength();
-
                 entity.Property(e => e.PublishDate)
                     .HasColumnName("publishDate")
                     .HasColumnType("date");

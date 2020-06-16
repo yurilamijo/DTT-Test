@@ -11,7 +11,7 @@ class Archive extends React.Component {
     }
 
     componentDidMount() {
-        fetch("https://localhost:5001/api/archived")
+        fetch("https://localhost:5001/api/archive")
         .then(response => response.json())
         .then((data) => this.setState(
             { archive: data}
@@ -20,7 +20,7 @@ class Archive extends React.Component {
 
     render() {
         const ArticleComponent = this.state.archive.map((article, i) =>
-            <ArticleBlock key={i} id={article.id} date={article.publishDate} title={article.title} desc={article.description}/>
+            <ArticleBlock key={i} id={article.id} date={article.publishDate} title={article.title} desc={article.summary}/>
         );
   
         return ( 
