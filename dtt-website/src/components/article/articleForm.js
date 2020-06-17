@@ -46,9 +46,7 @@ class ArticleForm extends React.Component {
         // const serverDate = `${year}-${month}-${day}`;
         const callMethod = params.id ? 'PUT' : 'POST';
         let str = 'https://localhost:5001/api/article';
-        if (callMethod == 'PUT') {
-            str += '/' + params.id
-        }
+        if (callMethod == 'PUT') str += '/' + params.id
 
         fetch(str, {
             method: callMethod,

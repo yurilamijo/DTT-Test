@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useRouteMatch} from 'react-router-dom';
 import '../css/admin.css'
 class Admin extends React.Component {
     constructor(props) {
@@ -19,14 +19,7 @@ class Admin extends React.Component {
       }
 
     render(){
-        const previewArticles = this.state.articles.map((article, i) =>
-                <tr key={article.id}>
-                    <td>{article.publishDate}</td>
-                    <Link to={`edit-article/${article.id}`}>
-                        <td>{article.title}</td>
-                    </Link>
-                </tr>
-        );
+        
 
         return (
             <div>
@@ -38,17 +31,42 @@ class Admin extends React.Component {
                             <th>Article</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        {previewArticles}
-                    </tbody>
+                    <PreviewArticles articles={this.state.articles}/>
                 </table>
                 <p>{this.state.articles.length} articles in total.</p> 
-                <Link to = "/add-article">
-                    <p> Add Article </p> 
-                </Link> 
+                <AddArticleLink />
             </div>
         )
     }
 }
 
 export default Admin
+
+function PreviewArticles(props) {
+    let {url} = useRouteMatch();
+
+    const articlesRows = props.articles.map((article, i) =>
+            <tr key={article.id}>
+                <td>{article.publishDate}</td>
+                <Link to={`${url}/edit-article/${article.id}`}>
+                    <td>{article.title}</td>
+                </Link>
+            </tr>
+    );
+
+    return (
+        <tbody>
+            {articlesRows}
+        </tbody>
+    );
+}
+
+function AddArticleLink() {
+    let {url} = useRouteMatch();
+
+    return (
+        <Link to={`${url}/add-article`}>
+            <p> Add Article </p> 
+        </Link> 
+    );
+}
