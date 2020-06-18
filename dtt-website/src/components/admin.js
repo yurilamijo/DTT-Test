@@ -8,6 +8,7 @@ class Admin extends React.Component {
     }
     
     componentDidMount() {
+        // Calls the API to get the all the articles
         fetch("https://localhost:5001/api/archive")
           .then(response => response.json())
           .then((data) => this.setState(
@@ -19,8 +20,6 @@ class Admin extends React.Component {
       }
 
     render(){
-        
-
         return (
             <div>
                 <h1>Admin - All articles</h1>

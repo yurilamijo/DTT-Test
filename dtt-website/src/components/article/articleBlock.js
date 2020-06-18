@@ -3,8 +3,10 @@ import { Link } from 'react-router-dom';
 
 class ArticleBlock extends React.Component {
     render() {
+        // Gets the parameters/props that where send by the Home component
         const { id, date, title, desc } = this.props;
 
+        // Formats the date
         const dateTimeFormat = new Intl.DateTimeFormat('en', { year: 'numeric', month: 'long', day: '2-digit' }); 
         const [{value:month},, {value:day}] = dateTimeFormat.formatToParts(new Date(date));
 

@@ -18,8 +18,9 @@ class ArticleForm extends React.Component {
     }
 
     componentDidMount() {
-        // API call get data
         const { match: { params } } = this.props;
+        // Calls the API to get the selected article by ID
+        // Will only be called if there was a ID als parameter
         if (params.id) {
             fetch(`https://localhost:5001/api/article/${params.id}`)
             .then(response => response.json())
@@ -30,11 +31,11 @@ class ArticleForm extends React.Component {
         }
     }
 
-    handleChange(event) {   
+    handleChange(event) {
         const target = event.target;
         const value = target.value;
         const name = target.name;
-
+        // Sets the value of the input by name if value gets changed
         this.setState({ [name]: value });
     }
 
@@ -46,13 +47,16 @@ class ArticleForm extends React.Component {
         // const serverDate = `${year}-${month}-${day}`;
         const callMethod = params.id ? 'PUT' : 'POST';
         let str = 'https://localhost:5001/api/article';
-        if (callMethod == 'PUT') str += '/' + params.id
+        // If method is PUT the call will be converted to a PUT call
+        if (callMethod == 'PUT') str += `/${params.id}`;
 
+        // API call that can be a POST or a PUT call
         fetch(str, {
             method: callMethod,
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(this.state),
         }).then(
+            // Redirects you to the admin page
             () => this.props.history.push('/admin')
         );
     }
@@ -61,10 +65,12 @@ class ArticleForm extends React.Component {
         event.preventDefault();
         const { match: { params } } = this.props;
 
+        // API call that deletes the selected article by ID
         fetch('https://localhost:5001/api/article/' + params.id,{
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' }
         }).then(
+            // Redirects you to the admin page
             () => this.props.history.push('/admin')
         )
     }
@@ -86,22 +92,10 @@ class ArticleForm extends React.Component {
             <div className="article-form">
                 <h1>{pageTitle} Article</h1>
                 <form className="form-article" onSubmit={this.submitArticle}>
-                    <label>
-                        <p>Article Title</p>
-                        <input className="form-input" name="title" type="text" value={title} required onChange={this.handleChange}/>
-                    </label>
-                    <label>
-                        <p>Article Summary</p>
-                        <textarea className="form-input" name="summary" type="text" value={summary} required onChange={this.handleChange}></textarea>
-                    </label>
-                    <label>
-                        <p>Article Content</p>
-                        <textarea className="form-input" name="description" type="text" value={description} required onChange={this.handleChange}></textarea>
-                    </label>
-                    <label>
-                        <p>Publication Date</p>
-                        <input className="form-input" name="publishDate" type="text" value={publishDate} required onChange={this.handleChange}/>
-                    </label>
+                    <CustomInput lableName="Article Title" inputName="title" value={title} inputType={"input"} handleChange={this.handleChange}/>
+                    <CustomInput lableName="Article Summary" inputName="summary" value={summary} inputType={"textarea"} handleChange={this.handleChange}/>
+                    <CustomInput lableName="Article Content" inputName="description" value={description} inputType={"textarea"} handleChange={this.handleChange}/>
+                    <CustomInput lableName="Publication Date" inputName="publishDate" value={publishDate} inputType={"input"} handleChange={this.handleChange}/>
                     <div className="form-footer">
                         <button type="submit">Save Changes</button>
                         <button>Cancel</button>
@@ -114,3 +108,23 @@ class ArticleForm extends React.Component {
 }
 
 export default withRouter(ArticleForm);
+
+class CustomInput extends React.Component {
+    render() {
+        const {lableName, inputName, value, inputType, handleChange} = this.props;
+
+        let input;
+        if(inputType == "textarea") {
+            input = <textarea className="form-input" name={inputName}  type="text" value={value} required onChange={handleChange}></textarea>
+        } else {
+            input = <input className="form-input" name={inputName} type="text" value={value} required onChange={handleChange}/>
+        }
+
+        return(
+            <label>
+                <p>{lableName}</p>
+                {input}
+            </label>
+        )
+    }
+}

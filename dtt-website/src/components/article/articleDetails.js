@@ -10,6 +10,7 @@ class Article extends React.Component {
     componentDidMount() {
         const { match: { params } } = this.props;
 
+        // Calls the API to get the wanted artcile by ID
         fetch(`https://localhost:5001/api/article/${params.id}`)
         .then(response => response.json())
         .then((data) => this.setState({ article: data }))
