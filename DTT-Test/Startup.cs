@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DTT_Test.Models;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -29,9 +30,21 @@ namespace DTT_Test
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<DTTContext>(options =>
+                options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddEntityFrameworkStores<DTTContext>();
+
+            services.AddIdentityServer()
+                .AddApiAuthorization<AppUser, DTTContext>();
+
+            services.AddAuthentication()
+                .AddIdentityServerJwt();
+
             services.AddCors(options =>
-                options.AddPolicy(name: MyAllowSpecificOrigins,
-                    builder =>
+            options.AddPolicy(name: MyAllowSpecificOrigins,
+                builder =>
                     {
                         builder.WithOrigins("http://localhost:3000")
                             .AllowAnyHeader()
@@ -40,10 +53,9 @@ namespace DTT_Test
                 )
             );
 
-            services.AddDbContext<DTTContext>(options =>
-                options.UseMySQL(Configuration.GetConnectionString("DefaultConnection")));
-
             services.AddControllers();
+            services.AddControllersWithViews();
+            services.AddRazorPages();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -63,6 +75,8 @@ namespace DTT_Test
 
             app.UseCors(MyAllowSpecificOrigins);
 
+            app.UseAuthentication();
+            app.UseIdentityServer();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

@@ -1,17 +1,17 @@
 ﻿using System;
+using IdentityServer4.EntityFramework.Options;
+using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.Extensions.Options;
 
 namespace DTT_Test.Models
 {
-    public partial class DTTContext : DbContext
+    public class DTTContext : ApiAuthorizationDbContext<AppUser>
     {
-        public DTTContext()
-        {
-        }
-
-        public DTTContext(DbContextOptions<DTTContext> options)
-            : base(options)
+        public DTTContext(
+            DbContextOptions options,
+            IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
         {
         }
 
@@ -19,6 +19,8 @@ namespace DTT_Test.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Article>(entity =>
             {
                 entity.ToTable("article");
@@ -31,7 +33,7 @@ namespace DTT_Test.Models
                     .HasColumnName("id")
                     .HasColumnType("int(11)");
 
-                entity.Property(e => e.Description)
+                entity.Property(e => e.Summary)
                     .IsRequired()
                     .HasColumnName("summary")
                     .HasMaxLength(150)
@@ -54,9 +56,9 @@ namespace DTT_Test.Models
                     .IsUnicode(false);
             });
 
-            OnModelCreatingPartial(modelBuilder);
+            //OnModelCreatingPartial(modelBuilder);
         }
 
-        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+        //partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
 }
