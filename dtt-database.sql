@@ -54,7 +54,7 @@ CREATE TABLE `article` (
   `publishDate` date NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -63,7 +63,7 @@ CREATE TABLE `article` (
 
 LOCK TABLES `article` WRITE;
 /*!40000 ALTER TABLE `article` DISABLE KEYS */;
-INSERT INTO `article` VALUES (1,'Yuri Test','Yuri Test','Test','2020-06-12'),(2,'DTT Test','Test user authentication','Added user authentication','2020-06-22'),(3,'Test','Test 3','Testen voor DTT','2020-06-18');
+INSERT INTO `article` VALUES (1,'Yuri Test','Yuri Test','Test','2020-06-12'),(2,'DTT Test','Test user authentication','Added user authentication','2020-06-19'),(3,'Test','Test 3','Testen voor DTT','2020-06-18'),(4,'Stage ASP.NET Core DTT','Stage vacaturen ASP.NET Core developer DTT','Belangrijke eigenschappen','2020-06-24'),(5,'Test Test Test','dsfdsfd','dsfdsf','2020-06-23'),(6,'hallo','fghfghfgh','fghfghfgh','2020-06-18'),(7,'Hallo 2','fdsfdsfds','fdsfdsfdsf','2020-06-17'),(8,'Laatste Test','Laatste Test Yuri','Laatste Test DTT','2020-06-23');
 /*!40000 ALTER TABLE `article` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -333,4 +333,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-06-24 11:03:33
+-- Dump completed on 2020-06-24 23:23:35
