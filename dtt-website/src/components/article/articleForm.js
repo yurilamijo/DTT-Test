@@ -1,6 +1,8 @@
 import React from 'react';
-import {withRouter} from 'react-router-dom';
-import '../../css/form.css'
+import { withRouter } from 'react-router-dom';
+import CustomInput from '../CustomeInput';
+import { FormatDate } from '../Helper';
+import '../../css/Form.css'
 
 class ArticleForm extends React.Component {
     constructor(props) {
@@ -24,7 +26,15 @@ class ArticleForm extends React.Component {
         if (params.id) {
             fetch(`https://localhost:5001/api/article/${params.id}`)
             .then(response => response.json())
-            .then((data) => this.setState(data))
+            .then((data) => {
+                this.setState({
+                    id: data.id,
+                    title: data.title,
+                    summary: data.summary,
+                    description: data.description,
+                    publishDate: FormatDate(data.publishDate,'numeric','2-digit','2-digit',true)
+                })
+            })
             .catch(
                 error => console.log(error)
             );
@@ -42,14 +52,10 @@ class ArticleForm extends React.Component {
     submitArticle(event) {
         event.preventDefault();
         const { match: { params } } = this.props;
-        
-        // const [day, month, year] = this.state.publishDate.split();
-        // const serverDate = `${year}-${month}-${day}`;
         const callMethod = params.id ? 'PUT' : 'POST';
         let str = 'https://localhost:5001/api/article';
         // If method is PUT the call will be converted to a PUT call
         if (callMethod == 'PUT') str += `/${params.id}`;
-
         // API call that can be a POST or a PUT call
         fetch(str, {
             method: callMethod,
@@ -92,10 +98,10 @@ class ArticleForm extends React.Component {
             <div className="article-form">
                 <h1>{pageTitle} Article</h1>
                 <form className="form-article" onSubmit={this.submitArticle}>
-                    <CustomInput lableName="Article Title" inputName="title" value={title} inputType={"input"} handleChange={this.handleChange}/>
+                    <CustomInput lableName="Article Title" inputName="title" value={title} inputType={"text"} handleChange={this.handleChange}/>
                     <CustomInput lableName="Article Summary" inputName="summary" value={summary} inputType={"textarea"} handleChange={this.handleChange}/>
                     <CustomInput lableName="Article Content" inputName="description" value={description} inputType={"textarea"} handleChange={this.handleChange}/>
-                    <CustomInput lableName="Publication Date" inputName="publishDate" value={publishDate} inputType={"input"} handleChange={this.handleChange}/>
+                    <CustomInput lableName="Publication Date" inputName="publishDate" value={publishDate} inputType={"date"} handleChange={this.handleChange}/>
                     <div className="form-footer">
                         <button type="submit">Save Changes</button>
                         <button>Cancel</button>
@@ -108,23 +114,3 @@ class ArticleForm extends React.Component {
 }
 
 export default withRouter(ArticleForm);
-
-class CustomInput extends React.Component {
-    render() {
-        const {lableName, inputName, value, inputType, handleChange} = this.props;
-
-        let input;
-        if(inputType == "textarea") {
-            input = <textarea className="form-input" name={inputName}  type="text" value={value} required onChange={handleChange}></textarea>
-        } else {
-            input = <input className="form-input" name={inputName} type="text" value={value} required onChange={handleChange}/>
-        }
-
-        return(
-            <label>
-                <p>{lableName}</p>
-                {input}
-            </label>
-        )
-    }
-}

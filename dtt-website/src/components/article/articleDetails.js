@@ -1,10 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { FormatDate } from '../Helper';
 
 class Article extends React.Component {
     constructor(props) {
         super (props);
-        this.state = { article: []};
+        this.state = { 
+            title: '',
+            description: '',
+            publishDate: ''
+        };
     }
 
     componentDidMount() {
@@ -13,23 +18,26 @@ class Article extends React.Component {
         // Calls the API to get the wanted artcile by ID
         fetch(`https://localhost:5001/api/article/${params.id}`)
         .then(response => response.json())
-        .then((data) => this.setState({ article: data }))
+        .then((data) => { 
+            this.setState({
+                title: data.title,
+                description: data.description,
+                publishDate: FormatDate(data.publishDate,'numeric','long','2-digit',false)
+            })
+        })
         .catch(
             error => console.log(error)
         );
     }
 
     render(){
-        const {title, description, publishDate } = this.state.article;
-
-        // const dateTimeFormat = new Intl.DateTimeFormat('en', { year: 'numeric', month: 'long', day: '2-digit' }); 
-        // const [{value:month},, {value:day}] = dateTimeFormat.formatToParts(new Date(publishDate));
-        
+        const {title, description, publishDate} = this.state;
+           
         return (
             <div>
                 <h1>{title}</h1>
                 <p>{description}</p>
-                <p className="publishdate">{publishDate}</p>
+                <p className="publishdate">PUBLISHED ON {publishDate.toUpperCase()}</p>
                 <Link to = "/">
                     <p> Return to Homepage </p> 
                 </Link> 

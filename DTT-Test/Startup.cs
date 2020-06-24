@@ -42,15 +42,16 @@ namespace DTT_Test
             services.AddAuthentication()
                 .AddIdentityServerJwt();
 
+            // This was needed for local development
             services.AddCors(options =>
-            options.AddPolicy(name: MyAllowSpecificOrigins,
-                builder =>
-                    {
-                        builder.WithOrigins("http://localhost:3000")
-                            .AllowAnyHeader()
-                            .AllowAnyMethod();
-                    }
-                )
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                    builder =>
+                        {
+                            builder.WithOrigins("http://localhost:3000")
+                                .AllowAnyHeader()
+                                .AllowAnyMethod();
+                        }
+                    )
             );
 
             services.AddControllers();

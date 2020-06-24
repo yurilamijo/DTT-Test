@@ -1,5 +1,5 @@
 import React from 'react';
-import ArticleBlock from './article/articleBlock';
+import ArticleBlock from './article/ArticleBlock';
 import { Link } from 'react-router-dom';
 
 class Archive extends React.Component {

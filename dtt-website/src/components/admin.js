@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link, useRouteMatch} from 'react-router-dom';
-import '../css/admin.css'
+import {FormatDate } from './Helper';
+import '../css/Admin.css'
 class Admin extends React.Component {
     constructor(props) {
         super (props);
@@ -43,14 +44,13 @@ export default Admin
 
 function PreviewArticles(props) {
     let {url} = useRouteMatch();
-
     const articlesRows = props.articles.map((article, i) =>
-            <tr key={article.id}>
-                <td>{article.publishDate}</td>
-                <Link to={`${url}/edit-article/${article.id}`}>
-                    <td>{article.title}</td>
-                </Link>
-            </tr>
+        <tr key={article.id}>
+            <td>{FormatDate(article.publishDate,'numeric','short','2-digit',false)}</td>
+            <Link to={`${url}/edit-article/${article.id}`}>
+                <td>{article.title}</td>
+            </Link>
+        </tr>
     );
 
     return (

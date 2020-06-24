@@ -55,10 +55,6 @@ namespace DTT_Test.Models
                     .HasMaxLength(80)
                     .IsUnicode(false);
             });
-
-            //OnModelCreatingPartial(modelBuilder);
         }
-
-        //partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
 }

@@ -1,7 +1,7 @@
 import React from 'react';
-import ArticleBlock from './article/articleBlock';
+import ArticleBlock from './article/ArticleBlock';
 import {Link} from 'react-router-dom';
-import '../css/article.css';
+import '../css/Article.css';
 
 class Home extends React.Component {
   constructor(props) {

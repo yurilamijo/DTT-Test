@@ -1,11 +1,11 @@
 import React from 'react';
-import Footer from './components/footer';
-import Header from './components/header';
-import Home from './components/home';
-import Archive from './components/archive';
-import Admin from './components/admin';
-import Article from './components/article/articleDetails';
-import ArticleForm from './components/article/articleForm';
+import Footer from './components/Footer';
+import Header from './components/Header';
+import Home from './components/Home';
+import Archive from './components/Archive';
+import Admin from './components/Admin';
+import Article from './components/article/ArticleDetails';
+import ArticleForm from './components/article/ArticleForm';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import './css/App.css';
 
