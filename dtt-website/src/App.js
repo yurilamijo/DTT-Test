@@ -6,6 +6,8 @@ import Archive from './components/Archive';
 import Admin from './components/Admin';
 import Article from './components/article/ArticleDetails';
 import ArticleForm from './components/article/ArticleForm';
+import LoginMenu from './components/LoginMenu';
+import {ProtectedRoute} from './components/ProtectedRoute';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import './css/App.css';
 
@@ -21,9 +23,10 @@ class App extends React.Component {
                 <Route path='/' exact component={Home}/>
                 <Route path='/article/:id' component={Article}/>
                 <Route path='/archive' component={Archive}/>
-                <Route path='/admin' exact component={Admin}/>
-                <Route path='/admin/edit-article/:id' component={ArticleForm}/>
-                <Route path='/admin/add-article' component={ArticleForm}/>
+                <ProtectedRoute path='/admin' exact component={Admin}/>
+                <ProtectedRoute path='/admin/edit-article/:id' component={ArticleForm}/>
+                <ProtectedRoute path='/admin/add-article' component={ArticleForm}/>
+                <Route path='/login/' component={LoginMenu}/>
               </Switch>
             </div>
             <Footer/>

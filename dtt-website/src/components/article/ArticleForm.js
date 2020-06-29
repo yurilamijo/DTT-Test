@@ -11,7 +11,8 @@ class ArticleForm extends React.Component {
             title: '',
             summary: '',
             description: '',
-            publishDate: ''
+            publishDate: '',
+            user: JSON.parse(localStorage.getItem('user'))
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -24,7 +25,13 @@ class ArticleForm extends React.Component {
         // Calls the API to get the selected article by ID
         // Will only be called if there was a ID als parameter
         if (params.id) {
-            fetch(`https://localhost:5001/api/article/${params.id}`)
+            fetch(`https://localhost:5001/api/article/${params.id}`, {
+                method: 'GET',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + this.state.user.token
+                },
+            })
             .then(response => response.json())
             .then((data) => {
                 this.setState({
@@ -59,7 +66,10 @@ class ArticleForm extends React.Component {
         // API call that can be a POST or a PUT call
         fetch(str, {
             method: callMethod,
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + this.state.user.token
+            },
             body: JSON.stringify(this.state),
         }).then(
             // Redirects you to the admin page
