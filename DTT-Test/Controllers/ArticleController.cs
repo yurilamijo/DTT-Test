@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DTT_Test.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DTT_Test.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ArticleController : ControllerBase
@@ -20,19 +22,23 @@ namespace DTT_Test.Controllers
             _context = context;
         }
 
+        [AllowAnonymous]
         // GET: api/Archive
         [HttpGet("/api/archive")]
         public async Task<ActionResult<IEnumerable<Article>>> GetArticle()
         {
+            // Gets every article
             return await _context.Article
                 .OrderByDescending(a => a.PublishDate)
                 .ToListAsync();
         }
 
+        [AllowAnonymous]
         // GET: api/articles
         [HttpGet("/api/articles")]
         public async Task<ActionResult<IEnumerable<Article>>> GetSumOfArticle()
         {
+            // Gets the 5 most recents articles
             return await _context.Article
                 .OrderByDescending(a => a.PublishDate)
                 .Take(5)
@@ -43,8 +49,10 @@ namespace DTT_Test.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Article>> GetArticle(int id)
         {
+            // Gets the article by id
             var article = await _context.Article.FindAsync(id);
 
+            // Checks if article exists
             if (article == null)
             {
                 return NotFound();
@@ -59,11 +67,13 @@ namespace DTT_Test.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutArticle(int id, Article article)
         {
+            // Checks if it's the right article
             if (id != article.Id)
             {
                 return BadRequest();
             }
 
+            // Inserts changed data
             _context.Entry(article).State = EntityState.Modified;
 
             try
@@ -91,6 +101,7 @@ namespace DTT_Test.Controllers
         [HttpPost]
         public async Task<ActionResult<Article>> PostArticle(Article article)
         {
+            // Adds the artcile to the database
             _context.Article.Add(article);
             await _context.SaveChangesAsync();
 
@@ -101,12 +112,15 @@ namespace DTT_Test.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Article>> DeleteArticle(int id)
         {
+            // Gets the article by id
             var article = await _context.Article.FindAsync(id);
+            // Checks if the article exists
             if (article == null)
             {
                 return NotFound();
             }
 
+            // Deletes the article form the database
             _context.Article.Remove(article);
             await _context.SaveChangesAsync();
 

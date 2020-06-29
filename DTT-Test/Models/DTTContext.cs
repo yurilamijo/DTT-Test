@@ -7,15 +7,15 @@ using Microsoft.Extensions.Options;
 
 namespace DTT_Test.Models
 {
-    public class DTTContext : ApiAuthorizationDbContext<AppUser>
+    public class DTTContext : DbContext
     {
-        public DTTContext(
-            DbContextOptions options,
-            IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
+        public DTTContext( DbContextOptions<DTTContext> options) 
+            : base(options)
         {
         }
 
         public virtual DbSet<Article> Article { get; set; }
+        public virtual DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
