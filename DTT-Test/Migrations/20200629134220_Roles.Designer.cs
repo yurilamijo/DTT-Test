@@ -3,14 +3,16 @@ using System;
 using DTT_Test.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DTT_Test.Migrations
 {
     [DbContext(typeof(DTTContext))]
-    partial class DTTContextModelSnapshot : ModelSnapshot
+    [Migration("20200629134220_Roles")]
+    partial class Roles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

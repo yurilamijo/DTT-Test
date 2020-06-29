@@ -104,10 +104,6 @@ namespace DTT_Test.Services
             if (!string.IsNullOrWhiteSpace(userParam.FirstName))
                 user.FirstName = userParam.FirstName;
 
-            // Checks if lastname is provided and updates it
-            if (!string.IsNullOrWhiteSpace(userParam.LastName))
-                user.LastName = userParam.LastName;
-
             // Checks if password is provided and updates it
             if (!string.IsNullOrWhiteSpace(password))
             {

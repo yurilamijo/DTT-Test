@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DTT_Test.Models;
 using Microsoft.AspNetCore.Authorization;
+using DTT_Test.Helpers;
 
 namespace DTT_Test.Controllers
 {
@@ -47,6 +48,7 @@ namespace DTT_Test.Controllers
 
         // GET: api/Article/5
         [HttpGet("{id}")]
+        [Authorize(Roles = Role.Admin)]
         public async Task<ActionResult<Article>> GetArticle(int id)
         {
             // Gets the article by id
@@ -65,6 +67,7 @@ namespace DTT_Test.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
+        [AuthorizeRoles(Role.Admin, Role.User)]
         public async Task<IActionResult> PutArticle(int id, Article article)
         {
             // Checks if it's the right article
@@ -99,6 +102,7 @@ namespace DTT_Test.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
+        [Authorize(Roles = Role.Admin)]
         public async Task<ActionResult<Article>> PostArticle(Article article)
         {
             // Adds the artcile to the database
@@ -110,6 +114,7 @@ namespace DTT_Test.Controllers
 
         // DELETE: api/Article/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = Role.Admin)]
         public async Task<ActionResult<Article>> DeleteArticle(int id)
         {
             // Gets the article by id

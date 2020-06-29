@@ -10,7 +10,7 @@ namespace DTT_Test.Models.Users
     {
         public int Id { get; set; }
         public int FirstName { get; set; }
-        public int LastName { get; set; }
+        public int Role { get; set; }
         public int UserName { get; set; }
     }
 }
