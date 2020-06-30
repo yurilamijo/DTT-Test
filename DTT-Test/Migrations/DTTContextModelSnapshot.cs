@@ -21,41 +21,29 @@ namespace DTT_Test.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("id")
-                        .HasColumnType("int(11)");
+                        .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnName("description")
                         .HasColumnType("varchar(225) CHARACTER SET utf8mb4")
-                        .HasMaxLength(225)
-                        .IsUnicode(false);
+                        .HasMaxLength(225);
 
                     b.Property<DateTime>("PublishDate")
-                        .HasColumnName("publishDate")
-                        .HasColumnType("date");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("Summary")
                         .IsRequired()
-                        .HasColumnName("summary")
                         .HasColumnType("varchar(150) CHARACTER SET utf8mb4")
-                        .HasMaxLength(150)
-                        .IsUnicode(false);
+                        .HasMaxLength(150);
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnName("title")
                         .HasColumnType("varchar(80) CHARACTER SET utf8mb4")
-                        .HasMaxLength(80)
-                        .IsUnicode(false);
+                        .HasMaxLength(80);
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Id")
-                        .IsUnique()
-                        .HasName("id_UNIQUE");
-
-                    b.ToTable("article");
+                    b.ToTable("Article");
                 });
 
             modelBuilder.Entity("DTT_Test.Models.User", b =>
@@ -65,19 +53,26 @@ namespace DTT_Test.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .IsRequired()
+                        .HasColumnType("varchar(80) CHARACTER SET utf8mb4")
+                        .HasMaxLength(80);
 
                     b.Property<byte[]>("PasswordHash")
+                        .IsRequired()
                         .HasColumnType("longblob");
 
                     b.Property<byte[]>("PasswordSalt")
+                        .IsRequired()
                         .HasColumnType("longblob");
 
                     b.Property<string>("Role")
+                        .IsRequired()
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("Username")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .IsRequired()
+                        .HasColumnType("varchar(80) CHARACTER SET utf8mb4")
+                        .HasMaxLength(80);
 
                     b.HasKey("Id");
 

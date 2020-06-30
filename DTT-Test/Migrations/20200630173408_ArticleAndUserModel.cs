@@ -4,24 +4,24 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DTT_Test.Migrations
 {
-    public partial class Initial : Migration
+    public partial class ArticleAndUserModel : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "article",
+                name: "Article",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int(11)", nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    title = table.Column<string>(unicode: false, maxLength: 80, nullable: false),
-                    summary = table.Column<string>(unicode: false, maxLength: 150, nullable: false),
-                    description = table.Column<string>(unicode: false, maxLength: 225, nullable: false),
-                    publishDate = table.Column<DateTime>(type: "date", nullable: false)
+                    Title = table.Column<string>(maxLength: 80, nullable: false),
+                    Summary = table.Column<string>(maxLength: 150, nullable: false),
+                    Description = table.Column<string>(maxLength: 225, nullable: false),
+                    PublishDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_article", x => x.id);
+                    table.PrimaryKey("PK_Article", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -30,28 +30,22 @@ namespace DTT_Test.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true),
-                    Username = table.Column<string>(nullable: true),
-                    PasswordHash = table.Column<byte[]>(nullable: true),
-                    PasswordSalt = table.Column<byte[]>(nullable: true)
+                    FirstName = table.Column<string>(maxLength: 80, nullable: false),
+                    Username = table.Column<string>(maxLength: 80, nullable: false),
+                    Role = table.Column<string>(nullable: false),
+                    PasswordHash = table.Column<byte[]>(nullable: false),
+                    PasswordSalt = table.Column<byte[]>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "id_UNIQUE",
-                table: "article",
-                column: "id",
-                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "article");
+                name: "Article");
 
             migrationBuilder.DropTable(
                 name: "Users");

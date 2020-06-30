@@ -68,7 +68,7 @@ namespace DTT_Test.Controllers
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
         [AuthorizeRoles(Role.Admin, Role.User)]
-        public async Task<IActionResult> PutArticle(int id, Article article)
+        public async Task<IActionResult> PutArticle(int id, [Bind("Title, Summary, Description, PublishDate")] Article article)
         {
             // Checks if it's the right article
             if (id != article.Id)
@@ -76,22 +76,25 @@ namespace DTT_Test.Controllers
                 return BadRequest();
             }
 
-            // Inserts changed data
-            _context.Entry(article).State = EntityState.Modified;
+            if (ModelState.IsValid)
+            {
+                // Inserts changed data
+                _context.Entry(article).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ArticleExists(id))
+                try
                 {
-                    return NotFound();
+                    await _context.SaveChangesAsync();
                 }
-                else
+                catch (DbUpdateConcurrencyException)
                 {
-                    throw;
+                    if (!ArticleExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
                 }
             }
 
@@ -103,13 +106,17 @@ namespace DTT_Test.Controllers
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
         [Authorize(Roles = Role.Admin)]
-        public async Task<ActionResult<Article>> PostArticle(Article article)
+        public async Task<ActionResult<Article>> PostArticle([Bind("Title, Summary, Description, PublishDate")] Article article)
         {
-            // Adds the artcile to the database
-            _context.Article.Add(article);
-            await _context.SaveChangesAsync();
+            if (ModelState.IsValid) {
+                // Adds the artcile to the database
+                _context.Article.Add(article);
+                await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetArticle", new { id = article.Id }, article);
+                return CreatedAtAction("GetArticle", new { id = article.Id }, article);
+            }
+
+            return NoContent();
         }
 
         // DELETE: api/Article/5
