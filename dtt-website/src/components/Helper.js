@@ -6,14 +6,14 @@ function FormatDate(date, typeYear, typeMonth, typeDay, seperator) {
     return formatedDate;
 }
 
-function AuthHeader() {
-    const user = JSON.parse(localStorage.getItem('user'));
+// function AuthHeader() {
+//     const user = JSON.parse(localStorage.getItem('user'));
 
-    if (user & user.token) {
-        return {'Authorization': 'Bearer ' + user.token}
-    }
-    return {};
-}
+//     if (user & user.token) {
+//         return {'Authorization': 'Bearer ' + user.token}
+//     }
+//     return {};
+// }
 
 export {
     FormatDate

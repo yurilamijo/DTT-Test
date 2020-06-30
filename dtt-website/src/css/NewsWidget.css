@@ -1,0 +1,13 @@
+.news-widget {
+    border-bottom: solid teal;
+}
+
+.news-widget h3 {
+    color: gold;
+    margin: 0;
+}
+
+.news {
+    display: flex;
+    align-items: center;
+}

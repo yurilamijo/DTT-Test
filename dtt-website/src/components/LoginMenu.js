@@ -1,5 +1,6 @@
 import React from 'react';
 import CustomInput from './CustomeInput';
+import '../css/Form.css';
 
 class LoginMenu extends React.Component {
     constructor(props) {
@@ -32,7 +33,6 @@ class LoginMenu extends React.Component {
             body: JSON.stringify({username, password})
         }).then(this.handleResponse)
         .then( user => {
-            console.log(user)
             localStorage.setItem('user', JSON.stringify(user));
             // Redirects you to the admin page
             this.props.history.push('/admin')
@@ -43,11 +43,6 @@ class LoginMenu extends React.Component {
         return response.text().then(text => {
             const data = text && JSON.parse(text)
             if(!response.ok) {
-                if (response.status === 401) {
-                    // auto logout if 401 response returned from api
-                    // logout();
-                    // location.reload(true);
-                }
                 const error = (data && data.message) || response.statusText;
                 return Promise.reject(error);
             }
@@ -57,13 +52,15 @@ class LoginMenu extends React.Component {
 
     render() {
         return(
-            <form onSubmit={this.login}>
-                <div>
+            <div className="login-menu">
+                <form className="form login" onSubmit={this.login}>
                     <CustomInput lableName="Username" inputName="username" inputType={"text"} handleChange={this.handleChange}/>
                     <CustomInput lableName="Password" inputName="password" inputType={"password"} handleChange={this.handleChange}/>
-                    <button type="submit">Login</button>
-                </div>
-            </form>
+                   <div className="form-footer">
+                       <button type="submit">Login</button>
+                    </div>
+                </form>
+            </div>  
         )
     }
 }

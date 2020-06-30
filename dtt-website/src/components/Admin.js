@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link, useRouteMatch} from 'react-router-dom';
 import {FormatDate } from './Helper';
+import NewsWidget from './NewsWidget';
 import '../css/Admin.css'
 class Admin extends React.Component {
     constructor(props) {
@@ -23,6 +24,7 @@ class Admin extends React.Component {
     render(){
         return (
             <div>
+                <NewsWidget/>
                 <h1>Admin - All articles</h1>
                 <table className="articles-overview">
                     <thead>

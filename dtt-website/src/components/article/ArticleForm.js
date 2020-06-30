@@ -107,7 +107,7 @@ class ArticleForm extends React.Component {
         return (
             <div className="article-form">
                 <h1>{pageTitle} Article</h1>
-                <form className="form-article" onSubmit={this.submitArticle}>
+                <form className="form" onSubmit={this.submitArticle}>
                     <CustomInput lableName="Article Title" inputName="title" value={title} inputType={"text"} handleChange={this.handleChange}/>
                     <CustomInput lableName="Article Summary" inputName="summary" value={summary} inputType={"textarea"} handleChange={this.handleChange}/>
                     <CustomInput lableName="Article Content" inputName="description" value={description} inputType={"textarea"} handleChange={this.handleChange}/>
