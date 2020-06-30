@@ -1,6 +1,6 @@
 import React from 'react';
-import {Link, useRouteMatch} from 'react-router-dom';
-import {FormatDate } from './Helper';
+import { Link, useRouteMatch } from 'react-router-dom';
+import { PreviewArticles } from './article/ArticlePreview';
 import NewsWidget from './NewsWidget';
 import '../css/Admin.css'
 class Admin extends React.Component {
@@ -43,24 +43,6 @@ class Admin extends React.Component {
 }
 
 export default Admin
-
-function PreviewArticles(props) {
-    let {url} = useRouteMatch();
-    const articlesRows = props.articles.map((article, i) =>
-        <tr key={article.id}>
-            <td>{FormatDate(article.publishDate,'numeric','short','2-digit',false)}</td>
-            <Link to={`${url}/edit-article/${article.id}`}>
-                <td>{article.title}</td>
-            </Link>
-        </tr>
-    );
-
-    return (
-        <tbody>
-            {articlesRows}
-        </tbody>
-    );
-}
 
 function AddArticleLink() {
     let {url} = useRouteMatch();

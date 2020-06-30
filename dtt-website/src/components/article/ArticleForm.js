@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import CustomInput from '../CustomeInput';
-import { FormatDate } from '../Helper';
+import { formatDate, getToken } from '../Helper';
 import '../../css/Form.css'
 
 class ArticleForm extends React.Component {
@@ -12,7 +12,6 @@ class ArticleForm extends React.Component {
             summary: '',
             description: '',
             publishDate: '',
-            user: JSON.parse(localStorage.getItem('user'))
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -29,7 +28,7 @@ class ArticleForm extends React.Component {
                 method: 'GET',
                 headers: { 
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + this.state.user.token
+                    'Authorization': `Bearer ${getToken()}`
                 },
             })
             .then(response => response.json())
@@ -39,7 +38,7 @@ class ArticleForm extends React.Component {
                     title: data.title,
                     summary: data.summary,
                     description: data.description,
-                    publishDate: FormatDate(data.publishDate,'numeric','2-digit','2-digit',true)
+                    publishDate: formatDate(data.publishDate,'numeric','2-digit','2-digit',true)
                 })
             })
             .catch(
@@ -68,7 +67,7 @@ class ArticleForm extends React.Component {
             method: callMethod,
             headers: { 
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + this.state.user.token
+                'Authorization': `Bearer ${getToken()}`
             },
             body: JSON.stringify(this.state),
         }).then(

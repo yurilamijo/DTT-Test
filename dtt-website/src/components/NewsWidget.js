@@ -1,4 +1,5 @@
 import React from "react";
+import { getUserRole } from './Helper';
 import '../css/NewsWidget.css';
 
 class NewsWidget extends React.Component {
@@ -13,7 +14,7 @@ class NewsWidget extends React.Component {
   }
 
   render() {
-    const role = JSON.parse(localStorage.getItem('user')).role;
+    const role = getUserRole();
 
     return (
       <div className="news-widget">

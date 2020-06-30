@@ -56,10 +56,7 @@ namespace DTT_Test.Controllers
 
             return Ok(new
             {
-                Id = user.Id,
                 Username = user.Username,
-                FirstName = user.FirstName,
-                Role = user.Role,
                 Token = tokenString
             });
         }

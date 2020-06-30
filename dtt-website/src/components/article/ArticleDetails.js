@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FormatDate } from '../Helper';
+import { formatDate } from '../Helper';
 
 class Article extends React.Component {
     constructor(props) {
@@ -22,7 +22,7 @@ class Article extends React.Component {
             this.setState({
                 title: data.title,
                 description: data.description,
-                publishDate: FormatDate(data.publishDate,'numeric','long','2-digit',false)
+                publishDate: formatDate(data.publishDate,'numeric','long','2-digit',false)
             })
         })
         .catch(

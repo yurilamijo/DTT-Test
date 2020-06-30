@@ -48,7 +48,7 @@ namespace DTT_Test.Controllers
 
         // GET: api/Article/5
         [HttpGet("{id}")]
-        [Authorize(Roles = Role.Admin)]
+        [AllowAnonymous]
         public async Task<ActionResult<Article>> GetArticle(int id)
         {
             // Gets the article by id

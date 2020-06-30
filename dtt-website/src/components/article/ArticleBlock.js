@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FormatDate } from '../Helper';
+import { formatDate } from '../Helper';
 
 
 class ArticleBlock extends React.Component {
@@ -8,7 +8,7 @@ class ArticleBlock extends React.Component {
         // Gets the parameters/props that where send by the Home component
         const { id, date, title, desc } = this.props;
         // Formats the date
-        const publishDate = FormatDate(date,'numeric','long','2-digit', false)
+        const publishDate = formatDate(date,'numeric','long','2-digit', false)
 
         return (
             <div className="article" id={id}>
