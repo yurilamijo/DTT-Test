@@ -1,0 +1,10 @@
+/* Admin */
+.articles-overview td:nth-child(1) {
+    width: 25%;
+}
+
+.articles-overview tr:nth-child(odd) {
+    background-color: lightgoldenrodyellow;
+}
+
+.articles-overview tr:hover {background-color: #ddd;}

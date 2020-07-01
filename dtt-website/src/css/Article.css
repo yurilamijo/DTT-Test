@@ -1,0 +1,26 @@
+/* Article */
+.article {
+    display: flex;
+    flex-direction: row;
+}
+
+.article-left {
+    display: flex;
+    flex: 2;
+}
+
+.article-right {
+    display: flex;
+    flex: 14;
+    flex-direction: column;
+}
+
+.article-title a {
+    color: inherit;
+    text-decoration: inherit;
+}
+
+.publishdate {
+    color: red;
+    padding-top: 5px;
+}

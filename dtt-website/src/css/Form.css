@@ -1,0 +1,51 @@
+/* Form */
+.form {
+    background-color: wheat;
+    padding: 25px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);;
+    border-radius: 5px;
+    margin-bottom: 25px;
+}
+
+.form label {
+    display: flex;
+    /* height: 2em; */
+    margin: 20px 0 20px 0;
+}
+
+.form label p {
+    flex: 1;
+    text-align: end;
+    margin: 0 10px 0 0;
+}
+
+.form-input {
+    flex: 6;
+    border-radius: 5px;
+    background-color: lightcyan;
+}
+
+.form-footer {
+    display: flex;
+    justify-content: center;
+}
+
+.form-footer button {
+    padding: 10px;
+    margin: 0 10px 0 10px;
+    width: 120px;
+    color: white;
+    font-weight: bold;
+    background-color: orange;
+    border-radius: 5px;
+    border-color: black;
+}
+
+.login {
+    width: 45%;
+}
+
+.login-menu {
+    display: flex;
+    justify-content: center;
+}

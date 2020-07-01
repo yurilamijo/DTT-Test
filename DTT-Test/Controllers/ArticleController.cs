@@ -6,9 +6,12 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DTT_Test.Models;
+using Microsoft.AspNetCore.Authorization;
+using DTT_Test.Helpers;
 
 namespace DTT_Test.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ArticleController : ControllerBase
@@ -20,19 +23,38 @@ namespace DTT_Test.Controllers
             _context = context;
         }
 
-        // GET: api/Article
-        [HttpGet]
+        // GET: api/Archive
+        [AllowAnonymous]
+        [HttpGet("/api/archive")]
         public async Task<ActionResult<IEnumerable<Article>>> GetArticle()
         {
-            return await _context.Article.ToListAsync();
+            // Gets every article
+            return await _context.Article
+                .OrderByDescending(a => a.PublishDate)
+                .ToListAsync();
+        }
+
+        // GET: api/articles
+        [AllowAnonymous]
+        [HttpGet("/api/articles")]
+        public async Task<ActionResult<IEnumerable<Article>>> GetSumOfArticle()
+        {
+            // Gets the 5 most recents articles
+            return await _context.Article
+                .OrderByDescending(a => a.PublishDate)
+                .Take(5)
+                .ToListAsync();
         }
 
         // GET: api/Article/5
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult<Article>> GetArticle(int id)
         {
+            // Gets the article by id
             var article = await _context.Article.FindAsync(id);
 
+            // Checks if article exists
             if (article == null)
             {
                 return NotFound();
@@ -45,28 +67,34 @@ namespace DTT_Test.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutArticle(int id, Article article)
+        [AuthorizeRoles(Role.Admin, Role.User)]
+        public async Task<IActionResult> PutArticle(int id, [Bind("Title, Summary, Description, PublishDate")] Article article)
         {
+            // Checks if it's the right article
             if (id != article.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(article).State = EntityState.Modified;
+            if (ModelState.IsValid)
+            {
+                // Inserts changed data
+                _context.Entry(article).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ArticleExists(id))
+                try
                 {
-                    return NotFound();
+                    await _context.SaveChangesAsync();
                 }
-                else
+                catch (DbUpdateConcurrencyException)
                 {
-                    throw;
+                    if (!ArticleExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
                 }
             }
 
@@ -77,24 +105,34 @@ namespace DTT_Test.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Article>> PostArticle(Article article)
+        [Authorize(Roles = Role.Admin)]
+        public async Task<ActionResult<Article>> PostArticle([Bind("Title, Summary, Description, PublishDate")] Article article)
         {
-            _context.Article.Add(article);
-            await _context.SaveChangesAsync();
+            if (ModelState.IsValid) {
+                // Adds the artcile to the database
+                _context.Article.Add(article);
+                await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetArticle", new { id = article.Id }, article);
+                return CreatedAtAction("GetArticle", new { id = article.Id }, article);
+            }
+
+            return NoContent();
         }
 
         // DELETE: api/Article/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = Role.Admin)]
         public async Task<ActionResult<Article>> DeleteArticle(int id)
         {
+            // Gets the article by id
             var article = await _context.Article.FindAsync(id);
+            // Checks if the article exists
             if (article == null)
             {
                 return NotFound();
             }
 
+            // Deletes the article form the database
             _context.Article.Remove(article);
             await _context.SaveChangesAsync();
 
