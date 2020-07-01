@@ -33,12 +33,16 @@ class LoginMenu extends React.Component {
             method: 'POST',
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify({username, password})
-        }).then(this.handleResponse)
+        })
+        .then(this.handleResponse)
         .then( user => {
             localStorage.setItem('user', JSON.stringify(user));
             // Redirects you to the admin page
             this.props.history.push('/admin')
         })
+        .catch(
+            error => console.error('There was a error: ', error)
+        );
     }
 
     handleResponse(response) {

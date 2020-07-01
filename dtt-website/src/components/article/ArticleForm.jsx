@@ -70,9 +70,13 @@ class ArticleForm extends React.Component {
                 'Authorization': `Bearer ${getToken()}`
             },
             body: JSON.stringify(this.state),
-        }).then(
+        })
+        .then(
             // Redirects you to the admin page
             () => this.props.history.push('/admin')
+        )
+        .catch(
+            error => console.log(error)
         );
     }
 
@@ -86,10 +90,14 @@ class ArticleForm extends React.Component {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${getToken()}`
             }
-        }).then(
+        })
+        .then(
             // Redirects you to the admin page
             () => this.props.history.push('/admin')
         )
+        .catch(
+            error => console.log(error)
+        );
     }
 
     render() {
