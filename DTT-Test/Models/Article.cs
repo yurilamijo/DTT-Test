@@ -10,14 +10,17 @@ namespace DTT_Test.Models
 
         [Required]
         [StringLength(80)]
+        [RegularExpression(@"^[a-zA-Z 0-9 ]*$")]
         public string Title { get; set; }
 
         [Required]
         [StringLength(150)]
+        [RegularExpression(@"^[A-Za-z0-9!?:@#$&()*\-`.+,/\ \t\n]*$")]
         public string Summary { get; set; }
 
         [Required]
         [StringLength(225)]
+        [RegularExpression(@"^[A-Za-z0-9!?:@#$&()*\-`.+,/\ \t\n]*$")]
         public string Description { get; set; }
 
         [Required]
