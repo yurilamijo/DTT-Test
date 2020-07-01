@@ -1,5 +1,6 @@
 // Formates the given date
 function formatDate(date, typeYear, typeMonth, typeDay, seperator) {
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat
     const dateFormat = new Intl.DateTimeFormat('en', { year: typeYear, month: typeMonth, day: typeDay }) 
     const [{ value: month },,{ value: day },,{ value: year }] = dateFormat.formatToParts(new Date(date)) 
     const formatedDate = seperator ? `${year}-${month}-${day}` : `${day} ${month} ${year}`;

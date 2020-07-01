@@ -23,8 +23,8 @@ class Admin extends React.Component {
       }
 
     render(){
+        // Shows the link if authorized
         const ConditionalLink = getUserRole() == "Admin" ? AddArticleLink : 'div';
-
 
         return (
             <div>

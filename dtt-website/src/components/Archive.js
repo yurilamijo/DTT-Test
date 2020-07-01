@@ -11,6 +11,7 @@ class Archive extends React.Component {
     }
 
     componentDidMount() {
+        // Gets every article
         fetch("https://localhost:5001/api/archive")
         .then(response => response.json())
         .then((data) => this.setState(
@@ -19,6 +20,7 @@ class Archive extends React.Component {
     }
 
     render() {
+        // Component that shows every renderd article
         const ArticleComponent = this.state.archive.map((article, i) =>
             <ArticleBlock key={i} id={article.id} date={article.publishDate} title={article.title} desc={article.summary}/>
         );

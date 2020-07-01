@@ -10,6 +10,7 @@ class LoginMenu extends React.Component {
             password: ''
         }
 
+        // Binds the functions
         this.handleChange = this.handleChange.bind(this);
         this.login = this.login.bind(this);
     }
@@ -27,6 +28,7 @@ class LoginMenu extends React.Component {
         event.preventDefault();
         const {username, password} = this.state;
 
+        // Authenticates the user
         fetch('https://localhost:5001/api/auth/',{
             method: 'POST',
             headers: {'Content-Type':'application/json'},

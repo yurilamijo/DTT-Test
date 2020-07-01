@@ -10,6 +10,7 @@ class NewsWidget extends React.Component {
   }
 
   logout() {
+    // Removes the user from the localstorage
     localStorage.removeItem('user');
   }
 

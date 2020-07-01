@@ -5,6 +5,7 @@ class CustomInput extends React.Component {
         const {lableName, inputName, value, inputType, handleChange} = this.props;
 
         let input;
+        // Change the input type
         if(inputType == "textarea") {
             input = <textarea className="form-input" name={inputName}  type={inputType} value={value} required onChange={handleChange}></textarea>
         } else {
