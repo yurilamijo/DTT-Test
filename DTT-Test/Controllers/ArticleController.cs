@@ -23,8 +23,8 @@ namespace DTT_Test.Controllers
             _context = context;
         }
 
-        [AllowAnonymous]
         // GET: api/Archive
+        [AllowAnonymous]
         [HttpGet("/api/archive")]
         public async Task<ActionResult<IEnumerable<Article>>> GetArticle()
         {
@@ -34,8 +34,8 @@ namespace DTT_Test.Controllers
                 .ToListAsync();
         }
 
-        [AllowAnonymous]
         // GET: api/articles
+        [AllowAnonymous]
         [HttpGet("/api/articles")]
         public async Task<ActionResult<IEnumerable<Article>>> GetSumOfArticle()
         {
