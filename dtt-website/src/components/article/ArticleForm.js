@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import CustomInput from '../CustomeInput';
-import { formatDate, getToken } from '../Helper';
+import { formatDate, getToken, getUserRole } from '../Helper';
 import '../../css/Form.css'
 
 class ArticleForm extends React.Component {
@@ -79,11 +79,13 @@ class ArticleForm extends React.Component {
     deleteArticle(event) {
         event.preventDefault();
         const { match: { params } } = this.props;
-
         // API call that deletes the selected article by ID
         fetch('https://localhost:5001/api/article/' + params.id,{
             method: 'DELETE',
-            headers: { 'Content-Type': 'application/json' }
+            headers: { 
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${getToken()}`
+            }
         }).then(
             // Redirects you to the admin page
             () => this.props.history.push('/admin')
@@ -116,7 +118,7 @@ class ArticleForm extends React.Component {
                         <button>Cancel</button>
                     </div>
                 </form>
-                {deleteLink}
+                {getUserRole() == "Admin" ? deleteLink : null}
             </div>  
         )
     }

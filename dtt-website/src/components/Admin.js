@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
 import { PreviewArticles } from './article/ArticlePreview';
 import NewsWidget from './NewsWidget';
+import { getUserRole } from './Helper';
 import '../css/Admin.css'
 class Admin extends React.Component {
     constructor(props) {
@@ -22,6 +23,9 @@ class Admin extends React.Component {
       }
 
     render(){
+        const ConditionalLink = getUserRole() == "Admin" ? AddArticleLink : 'div';
+
+
         return (
             <div>
                 <NewsWidget/>
@@ -36,7 +40,7 @@ class Admin extends React.Component {
                     <PreviewArticles articles={this.state.articles}/>
                 </table>
                 <p>{this.state.articles.length} articles in total.</p> 
-                <AddArticleLink />
+                <ConditionalLink />
             </div>
         )
     }
