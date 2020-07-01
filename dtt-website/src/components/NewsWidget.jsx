@@ -1,5 +1,5 @@
 import React from "react";
-import { getUserRole } from './Helper';
+import { getUserRole } from '../Helper';
 import '../css/NewsWidget.css';
 
 class NewsWidget extends React.Component {

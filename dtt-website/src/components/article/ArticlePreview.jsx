@@ -1,5 +1,5 @@
 import React from 'react';
-import { formatDate } from '../Helper';
+import { formatDate } from '../../Helper';
 import { Link, useRouteMatch } from 'react-router-dom';
 
 export function PreviewArticles(props) {

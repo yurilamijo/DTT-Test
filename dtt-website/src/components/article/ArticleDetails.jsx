@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { formatDate } from '../Helper';
+import { formatDate } from '../../Helper';
 
 class Article extends React.Component {
     constructor(props) {

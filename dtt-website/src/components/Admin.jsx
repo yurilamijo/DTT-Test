@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
 import { PreviewArticles } from './article/ArticlePreview';
 import NewsWidget from './NewsWidget';
-import { getUserRole } from './Helper';
+import { getUserRole } from '../Helper';
 import '../css/Admin.css'
 class Admin extends React.Component {
     constructor(props) {
