@@ -33,6 +33,7 @@ namespace DTT_Test
         {
             IdentityModelEventSource.ShowPII = true;
 
+            // Configure the MySQL database
             services.AddDbContext<DTTContext>(options =>
                 options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
 
@@ -91,6 +92,7 @@ namespace DTT_Test
             );
 
             services.AddControllers();
+            // Setting up the repositories
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IArticleRepository, ArticleRepository>();
         }
@@ -115,7 +117,6 @@ namespace DTT_Test
             app.UseCors(MyAllowSpecificOrigins);
 
             app.UseAuthentication();
-            //app.UseIdentityServer();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

@@ -21,7 +21,9 @@ namespace DTT_Test
             using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
+                // Gets the used database
                 var context = services.GetRequiredService<DTTContext>();
+                // Using the database seeder
                 DbSeeder.Initialize(context);
             }
             host.Run();

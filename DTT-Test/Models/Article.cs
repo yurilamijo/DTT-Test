@@ -4,6 +4,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DTT_Test.Models
 {
+    /* Article class
+     * Text is getting validated by Regex
+     */
     public partial class Article
     {
         public int Id { get; set; }

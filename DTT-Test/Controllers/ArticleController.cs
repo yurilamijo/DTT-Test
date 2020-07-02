@@ -26,6 +26,7 @@ namespace DTT_Test.Controllers
         [HttpGet("/api/archive")]
         public async Task<IEnumerable<Article>> GetArticleAsync()
         {            
+            // Returns every article
             return await _artcileRepository.GetAll();
         }
 
@@ -34,7 +35,7 @@ namespace DTT_Test.Controllers
         [HttpGet("/api/articles")]
         public async Task<IEnumerable<Article>> GetSumOfArticleAsync()
         {
-            // Gets the 5 most recents articles
+            // Returns the 5 most recents articles
             return await _artcileRepository.GetRecentArticles();
         }
 
@@ -49,9 +50,11 @@ namespace DTT_Test.Controllers
             // Checks if article exists
             if (article == null)
             {
+                // return error message if there was an exception
                 return NotFound();
             }
 
+            // Returns the founded article
             return article;
         }
 
@@ -65,9 +68,11 @@ namespace DTT_Test.Controllers
             // Checks if it's the right article
             if (id != article.Id)
             {
+                // return error message if there was an exception
                 return BadRequest();
             }
 
+            // Checks if the model is valid
             if (ModelState.IsValid)
             {
                 try
@@ -79,6 +84,7 @@ namespace DTT_Test.Controllers
                 {
                     if (!await _artcileRepository.ArticleExists(id))
                     {
+                        // return error message if there was an exception
                         return NotFound();
                     }
                     else
@@ -88,6 +94,7 @@ namespace DTT_Test.Controllers
                 }
             }
 
+            // return error message if there was no article
             return NoContent();
         }
 
@@ -98,6 +105,7 @@ namespace DTT_Test.Controllers
         [Authorize(Roles = Role.Admin)]
         public async Task<ActionResult<Article>> PostArticleAsync([Bind("Title, Summary, Description, PublishDate")] Article article)
         {
+            // Checks if the model is valid
             if (ModelState.IsValid)
             {
                 // Adds the artcile to the database
@@ -105,6 +113,7 @@ namespace DTT_Test.Controllers
                 return CreatedAtAction("GetArticle", new { id = article.Id }, article);
             }
 
+            // return error message if there was no article
             return NoContent();
         }
 
@@ -118,6 +127,7 @@ namespace DTT_Test.Controllers
             // Checks if the article exists
             if (article == null)
             {
+                // return error message if there was no article
                 return NotFound();
             }
 

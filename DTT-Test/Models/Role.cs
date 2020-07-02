@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DTT_Test.Models
 {
+    /* User roles with constants variables*/
     public static class Role
     {
         public const string Admin = "Admin";

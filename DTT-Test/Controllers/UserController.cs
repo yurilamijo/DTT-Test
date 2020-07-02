@@ -34,13 +34,18 @@ namespace DTT_Test.Controllers
         [HttpPost("/api/auth")]
         public IActionResult Authenticate([FromBody] AuthenticateModel model)
         {
+            // Authenticates the user
             var user = _userRepository.Authenticate(model.Username, model.Password);
 
             if (user == null)
+                // return error message if there was no user
                 return BadRequest(new { message = "Username or password is incorrect" });
 
+            // Creating the JWT token handler
             var tokenHandler = new JwtSecurityTokenHandler();
+            // Encodes the string
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+            // Settings for the token
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]
@@ -48,9 +53,12 @@ namespace DTT_Test.Controllers
                     new Claim(ClaimTypes.Name, user.Id.ToString()),
                     new Claim(ClaimTypes.Role, user.Role)
                 }),
+                // Setting the expiry date or time of the token
                 Expires = DateTime.UtcNow.AddMinutes(60),
+                // Signing the token
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
+            // Creating the token
             var token = tokenHandler.CreateToken(tokenDescriptor);
             var tokenString = tokenHandler.WriteToken(token);
 
@@ -69,12 +77,13 @@ namespace DTT_Test.Controllers
 
             try
             {
-                // Creates user
+                // Creates the user and stores it in the database
                 _userRepository.Create(user, model.Password);
                 return Ok();
             }
             catch (AppException ex)
             {
+                // return error message if there was an exception
                 return BadRequest(new { message = ex.Message });
             }
         }
@@ -82,6 +91,7 @@ namespace DTT_Test.Controllers
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
+            // Gets the user from the database
             var user = _userRepository.GetById(id);
             var model = _mapper.Map<UserModel>(user);
             return Ok(model);
@@ -90,13 +100,12 @@ namespace DTT_Test.Controllers
         [HttpPut("{id}")]
         public IActionResult Update(int id, [FromBody] UpdateModel model)
         {
-            // map model to entity and set id
             var user = _mapper.Map<User>(model);
             user.Id = id;
 
             try
             {
-                // update user 
+                // Updates the user and stores it in the database
                 _userRepository.Update(user, model.Password);
                 return Ok();
             }
@@ -110,6 +119,7 @@ namespace DTT_Test.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
+            // Delets the user
             _userRepository.Delete(id);
             return Ok();
         }

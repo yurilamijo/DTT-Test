@@ -17,11 +17,13 @@ namespace DTT_Test.Repositories
 
         public async Task<Article> GetById(int id)
         {
+            // Finds a article by id
             return await _context.Article.FindAsync(id);
         }
 
         public async Task<IEnumerable<Article>> GetAll()
         {
+            // Finds every article
             return await _context.Article
                 .OrderByDescending(a => a.PublishDate)
                 .ToListAsync();
@@ -29,6 +31,7 @@ namespace DTT_Test.Repositories
 
         public async Task<IEnumerable<Article>> GetRecentArticles()
         {
+            // Finds the 5 most recents articles
             return await _context.Article
                 .OrderByDescending(a => a.PublishDate)
                 .Take(5)
@@ -37,23 +40,27 @@ namespace DTT_Test.Repositories
 
         public async Task<bool> ArticleExists(int id)
         {
+            // Checks if the article exists
             return await _context.Article.AnyAsync(e => e.Id == id);
         }
 
         public async Task Create(Article article)
         {
+            // Saves the article to the database
             _context.Article.Add(article);
             await _context.SaveChangesAsync();
         }
 
         public async Task Delete(Article article)
         {
+            // Removes the article from the database
             _context.Article.Remove(article);
             await _context.SaveChangesAsync();
         }
 
         public async Task Update(Article article)
         {
+            // Updates the article from the database
             _context.Entry(article).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
