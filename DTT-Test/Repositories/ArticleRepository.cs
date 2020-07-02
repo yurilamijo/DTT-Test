@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using DTT_Test.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,47 +15,47 @@ namespace DTT_Test.Repositories
             _context = context;
         }
 
-        public Article GetById(int id)
+        public async Task<Article> GetById(int id)
         {
-            return _context.Article.Find(id);
+            return await _context.Article.FindAsync(id);
         }
 
-        public IEnumerable<Article> GetAll()
+        public async Task<IEnumerable<Article>> GetAll()
         {
-            return _context.Article
+            return await _context.Article
                 .OrderByDescending(a => a.PublishDate)
-                .ToList();
+                .ToListAsync();
         }
 
-        public IEnumerable<Article> GetRecentArticles()
+        public async Task<IEnumerable<Article>> GetRecentArticles()
         {
-            return _context.Article
+            return await _context.Article
                 .OrderByDescending(a => a.PublishDate)
                 .Take(5)
-                .ToList();
+                .ToListAsync();
         }
 
-        public void Create(Article article)
+        public async Task<bool> ArticleExists(int id)
+        {
+            return await _context.Article.AnyAsync(e => e.Id == id);
+        }
+
+        public async Task Create(Article article)
         {
             _context.Article.Add(article);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public void Delete(Article article)
+        public async Task Delete(Article article)
         {
             _context.Article.Remove(article);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public void Update(Article article)
+        public async Task Update(Article article)
         {
             _context.Entry(article).State = EntityState.Modified;
-            _context.SaveChanges();
-        }
-
-        public bool ArticleExists(int id)
-        {
-            return _context.Article.Any(e => e.Id == id);
+            await _context.SaveChangesAsync();
         }
     }
 }

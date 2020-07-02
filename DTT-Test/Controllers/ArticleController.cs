@@ -5,6 +5,7 @@ using DTT_Test.Models;
 using Microsoft.AspNetCore.Authorization;
 using DTT_Test.Helpers;
 using DTT_Test.Repositories;
+using System.Threading.Tasks;
 
 namespace DTT_Test.Controllers
 {
@@ -13,37 +14,37 @@ namespace DTT_Test.Controllers
     [ApiController]
     public class ArticleController : ControllerBase
     {
-        private IArticleRepository _artcileRepository;
+        private readonly IArticleRepository _artcileRepository;
 
         public ArticleController(IArticleRepository articleRepository)
         {
-            this._artcileRepository = articleRepository;
+            _artcileRepository = articleRepository;
         }
 
         // GET: api/Archive
         [AllowAnonymous]
         [HttpGet("/api/archive")]
-        public IEnumerable<Article> GetArticle()
+        public async Task<IEnumerable<Article>> GetArticleAsync()
         {            
-            return _artcileRepository.GetAll();
+            return await _artcileRepository.GetAll();
         }
 
         // GET: api/articles
         [AllowAnonymous]
         [HttpGet("/api/articles")]
-        public IEnumerable<Article> GetSumOfArticle()
+        public async Task<IEnumerable<Article>> GetSumOfArticleAsync()
         {
             // Gets the 5 most recents articles
-            return _artcileRepository.GetRecentArticles();
+            return await _artcileRepository.GetRecentArticles();
         }
 
         // GET: api/Article/5
         [HttpGet("{id}")]
         [AllowAnonymous]
-        public ActionResult<Article> GetArticle(int id)
+        public async Task<ActionResult<Article>> GetArticleAsync(int id)
         {
             // Gets the article by id
-            var article = _artcileRepository.GetById(id);
+            var article = await _artcileRepository.GetById(id);
 
             // Checks if article exists
             if (article == null)
@@ -59,7 +60,7 @@ namespace DTT_Test.Controllers
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
         [AuthorizeRoles(Role.Admin, Role.User)]
-        public IActionResult PutArticle(int id, [Bind("Title, Summary, Description, PublishDate")] Article article)
+        public async Task<IActionResult> PutArticleAsync(int id, [Bind("Title, Summary, Description, PublishDate")] Article article)
         {
             // Checks if it's the right article
             if (id != article.Id)
@@ -72,11 +73,11 @@ namespace DTT_Test.Controllers
                 try
                 {
                     // Inserts changed data
-                    _artcileRepository.Update(article);
+                    await _artcileRepository.Update(article);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!_artcileRepository.ArticleExists(id))
+                    if (!await _artcileRepository.ArticleExists(id))
                     {
                         return NotFound();
                     }
@@ -95,12 +96,12 @@ namespace DTT_Test.Controllers
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
         [Authorize(Roles = Role.Admin)]
-        public ActionResult<Article> PostArticle([Bind("Title, Summary, Description, PublishDate")] Article article)
+        public async Task<ActionResult<Article>> PostArticleAsync([Bind("Title, Summary, Description, PublishDate")] Article article)
         {
             if (ModelState.IsValid)
             {
                 // Adds the artcile to the database
-                _artcileRepository.Create(article);
+                await _artcileRepository.Create(article);
                 return CreatedAtAction("GetArticle", new { id = article.Id }, article);
             }
 
@@ -110,10 +111,10 @@ namespace DTT_Test.Controllers
         // DELETE: api/Article/5
         [HttpDelete("{id}")]
         [Authorize(Roles = Role.Admin)]
-        public ActionResult<Article> DeleteArticle(int id)
+        public async Task<ActionResult<Article>> DeleteArticleAsync(int id)
         {
             // Gets the article by id
-            var article = _artcileRepository.GetById(id);
+            var article = await _artcileRepository.GetById(id);
             // Checks if the article exists
             if (article == null)
             {
@@ -121,7 +122,7 @@ namespace DTT_Test.Controllers
             }
 
             // Deletes the article form the database
-            _artcileRepository.Delete(article);
+            await _artcileRepository.Delete(article);
             return article;
         }
     }

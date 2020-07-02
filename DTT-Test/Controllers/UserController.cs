@@ -19,8 +19,8 @@ namespace DTT_Test.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private IUserRepository _userRepository;
-        private IMapper _mapper;
+        private readonly IUserRepository _userRepository;
+        private readonly IMapper _mapper;
         private readonly AppSettings _appSettings;
 
         public UserController(IUserRepository userRepository, IMapper mapper, IOptions<AppSettings> appSettings)
