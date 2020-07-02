@@ -9,6 +9,10 @@ namespace DTT_Test.Models
 {
     public class DTTContext : DbContext
     {
+        public DTTContext()
+        {
+        }
+
         public DTTContext( DbContextOptions<DTTContext> options) 
             : base(options)
         {

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using DTT_Test.Helpers;
 using DTT_Test.Models;
+using DTT_Test.Repositories;
 using DTT_Test.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -104,6 +105,8 @@ namespace DTT_Test
                         }
                     )
             );
+
+            services.AddScoped<IArticleRepository, ArticleRepository>();
 
             services.AddControllers();
             //services.AddControllersWithViews();
