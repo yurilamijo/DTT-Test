@@ -1,28 +1,19 @@
 ﻿using DTT_Test.Helpers;
 using DTT_Test.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
-namespace DTT_Test.Services
+namespace DTT_Test.Repositories
 {
-    public interface IUserService
-    {
-        User Authenticate(string username, string password);
-        User GetById(int id);
-        User Create(User user, string password);
-        void Update(User user, string password = null);
-        void Delete(int id);
-    }
-
-    public class UserService : IUserService
+    public class UserRepository : IUserRepository
     {
         private readonly DTTContext _context;
-        public UserService(DTTContext context)
+
+        public UserRepository(DTTContext context)
         {
             _context = context;
         }
+
         public User Authenticate(string username, string password)
         {
             // Checks if parameters are not empty

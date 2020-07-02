@@ -1,24 +1,17 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using DTT_Test.Helpers;
 using DTT_Test.Models;
 using DTT_Test.Repositories;
-using DTT_Test.Services;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 
@@ -63,9 +56,9 @@ namespace DTT_Test
                 {
                     OnTokenValidated = context =>
                     {
-                        var userService = context.HttpContext.RequestServices.GetRequiredService<IUserService>();
+                        var userRepository = context.HttpContext.RequestServices.GetRequiredService<IUserRepository>();
                         var userId = int.Parse(context.Principal.Identity.Name);
-                        var user = userService.GetById(userId);
+                        var user = userRepository.GetById(userId);
                         if (user == null)
                         {
                             // Return unauthorized if user no longer exists
@@ -85,15 +78,6 @@ namespace DTT_Test
                 };
             });
 
-            //services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = true)
-            //    .AddEntityFrameworkStores<DTTContext>();
-
-            //services.AddIdentityServer()
-            //    .AddApiAuthorization<AppUser, DTTContext>();
-
-            //services.AddAuthentication()
-            //    .AddIdentityServerJwt();
-
             // This was needed for local development
             services.AddCors(options =>
                 options.AddPolicy(name: MyAllowSpecificOrigins,
@@ -106,12 +90,9 @@ namespace DTT_Test
                     )
             );
 
-            services.AddScoped<IArticleRepository, ArticleRepository>();
-
             services.AddControllers();
-            //services.AddControllersWithViews();
-            //services.AddRazorPages();
-            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IArticleRepository, ArticleRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

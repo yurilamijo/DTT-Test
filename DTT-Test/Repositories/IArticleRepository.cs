@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using DTT_Test.Models;
 
 namespace DTT_Test.Repositories
@@ -9,10 +8,9 @@ namespace DTT_Test.Repositories
         Article GetById(int id);
         IEnumerable<Article> GetAll();
         IEnumerable<Article> GetRecentArticles();
-        void Add(Article entity);
+        void Create(Article entity);
         void Delete(Article article);
-        void Edit(Article entity);
+        void Update(Article entity);
         bool ArticleExists(int id);
-        void Save();
     }
 }

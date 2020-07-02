@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DTT_Test.Models;
@@ -76,8 +72,7 @@ namespace DTT_Test.Controllers
                 try
                 {
                     // Inserts changed data
-                    _artcileRepository.Edit(article);
-                    _artcileRepository.Save();
+                    _artcileRepository.Update(article);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -105,8 +100,7 @@ namespace DTT_Test.Controllers
             if (ModelState.IsValid)
             {
                 // Adds the artcile to the database
-                _artcileRepository.Add(article);
-                _artcileRepository.Save();
+                _artcileRepository.Create(article);
                 return CreatedAtAction("GetArticle", new { id = article.Id }, article);
             }
 
@@ -128,7 +122,6 @@ namespace DTT_Test.Controllers
 
             // Deletes the article form the database
             _artcileRepository.Delete(article);
-            _artcileRepository.Save();
             return article;
         }
     }

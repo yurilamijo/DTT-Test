@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using DTT_Test.Models;
 using Microsoft.EntityFrameworkCore;
@@ -8,7 +7,7 @@ namespace DTT_Test.Repositories
 {
     public class ArticleRepository : IArticleRepository
     {
-        private DTTContext _context;
+        private readonly DTTContext _context;
 
         public ArticleRepository(DTTContext context)
         {
@@ -35,29 +34,27 @@ namespace DTT_Test.Repositories
                 .ToList();
         }
 
-        public void Add(Article article)
+        public void Create(Article article)
         {
             _context.Article.Add(article);
+            _context.SaveChanges();
         }
 
         public void Delete(Article article)
         {
             _context.Article.Remove(article);
+            _context.SaveChanges();
         }
 
-        public void Edit(Article article)
+        public void Update(Article article)
         {
             _context.Entry(article).State = EntityState.Modified;
+            _context.SaveChanges();
         }
 
         public bool ArticleExists(int id)
         {
             return _context.Article.Any(e => e.Id == id);
-        }
-
-        public void Save()
-        {
-            _context.SaveChanges();
         }
     }
 }

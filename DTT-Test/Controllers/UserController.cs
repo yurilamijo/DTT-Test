@@ -6,7 +6,7 @@ using AutoMapper;
 using DTT_Test.Helpers;
 using DTT_Test.Models;
 using DTT_Test.Models.Users;
-using DTT_Test.Services;
+using DTT_Test.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -19,13 +19,13 @@ namespace DTT_Test.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private IUserService _userService;
+        private IUserRepository _userRepository;
         private IMapper _mapper;
         private readonly AppSettings _appSettings;
 
-        public UserController(IUserService userService, IMapper mapper, IOptions<AppSettings> appSettings)
+        public UserController(IUserRepository userRepository, IMapper mapper, IOptions<AppSettings> appSettings)
         {
-            _userService = userService;
+            _userRepository = userRepository;
             _mapper = mapper;
             _appSettings = appSettings.Value;
         }
@@ -34,7 +34,7 @@ namespace DTT_Test.Controllers
         [HttpPost("/api/auth")]
         public IActionResult Authenticate([FromBody] AuthenticateModel model)
         {
-            var user = _userService.Authenticate(model.Username, model.Password);
+            var user = _userRepository.Authenticate(model.Username, model.Password);
 
             if (user == null)
                 return BadRequest(new { message = "Username or password is incorrect" });
@@ -70,7 +70,7 @@ namespace DTT_Test.Controllers
             try
             {
                 // Creates user
-                _userService.Create(user, model.Password);
+                _userRepository.Create(user, model.Password);
                 return Ok();
             }
             catch (AppException ex)
@@ -82,7 +82,7 @@ namespace DTT_Test.Controllers
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            var user = _userService.GetById(id);
+            var user = _userRepository.GetById(id);
             var model = _mapper.Map<UserModel>(user);
             return Ok(model);
         }
@@ -97,7 +97,7 @@ namespace DTT_Test.Controllers
             try
             {
                 // update user 
-                _userService.Update(user, model.Password);
+                _userRepository.Update(user, model.Password);
                 return Ok();
             }
             catch (AppException ex)
@@ -110,7 +110,7 @@ namespace DTT_Test.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            _userService.Delete(id);
+            _userRepository.Delete(id);
             return Ok();
         }
     }
