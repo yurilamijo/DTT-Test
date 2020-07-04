@@ -9,8 +9,8 @@
 
 .form label {
     display: flex;
-    /* height: 2em; */
     margin: 20px 0 20px 0;
+    justify-content: space-between;
 }
 
 .form label p {
@@ -20,7 +20,7 @@
 }
 
 .form-input {
-    flex: 6;
+    flex: 3;
     border-radius: 5px;
     background-color: lightcyan;
 }
@@ -42,10 +42,20 @@
 }
 
 .login {
-    width: 45%;
+    min-width: 45%;
 }
 
 .login-menu {
     display: flex;
     justify-content: center;
+}
+
+@media only screen and (max-width: 840px) {
+    .form label {
+        flex-direction: column;
+    }
+
+    .form label p {
+        text-align: initial;
+    }
 }
