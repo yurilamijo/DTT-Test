@@ -26,7 +26,8 @@ class Archive extends React.Component {
         );
   
         return ( 
-            <div> 
+            <div>
+                <h1>Article Archive</h1> 
                 {ArticleComponent}
                 <p>{this.state.archive.length} articles in total.</p> 
                 <Link to = "/">

@@ -4,7 +4,7 @@
 }
 
 .articles-overview tr:nth-child(odd) {
-    background-color: lightgoldenrodyellow;
+    background-color: #fff4cf;
 }
 
 .articles-overview tr:hover {background-color: #ddd;}
