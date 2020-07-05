@@ -6,7 +6,7 @@ using AutoMapper;
 using DTT_Test.Helpers;
 using DTT_Test.Models;
 using DTT_Test.Models.Users;
-using DTT_Test.Services;
+using DTT_Test.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -19,28 +19,34 @@ namespace DTT_Test.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private IUserService _userService;
-        private IMapper _mapper;
+        private readonly IUserRepository _userRepository;
+        private readonly IMapper _mapper;
         private readonly AppSettings _appSettings;
 
-        public UserController(IUserService userService, IMapper mapper, IOptions<AppSettings> appSettings)
+        public UserController(IUserRepository userRepository, IMapper mapper, IOptions<AppSettings> appSettings)
         {
-            _userService = userService;
+            _userRepository = userRepository;
             _mapper = mapper;
             _appSettings = appSettings.Value;
         }
 
+        // POST: api/Auth
         [AllowAnonymous]
         [HttpPost("/api/auth")]
         public IActionResult Authenticate([FromBody] AuthenticateModel model)
         {
-            var user = _userService.Authenticate(model.Username, model.Password);
+            // Authenticates the user
+            var user = _userRepository.Authenticate(model.Username, model.Password);
 
             if (user == null)
+                // return error message if there was no user
                 return BadRequest(new { message = "Username or password is incorrect" });
 
+            // Creating the JWT token handler
             var tokenHandler = new JwtSecurityTokenHandler();
+            // Encodes the string
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+            // Settings for the token
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]
@@ -48,9 +54,12 @@ namespace DTT_Test.Controllers
                     new Claim(ClaimTypes.Name, user.Id.ToString()),
                     new Claim(ClaimTypes.Role, user.Role)
                 }),
+                // Setting the expiry date or time of the token
                 Expires = DateTime.UtcNow.AddMinutes(60),
+                // Signing the token
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
+            // Creating the token
             var token = tokenHandler.CreateToken(tokenDescriptor);
             var tokenString = tokenHandler.WriteToken(token);
 
@@ -61,56 +70,64 @@ namespace DTT_Test.Controllers
             });
         }
 
-        [AllowAnonymous]
+        // POST: api/Register
         [HttpPost("/api/register")]
+        [Authorize(Roles = Role.Admin)]
         public IActionResult Register([FromBody] RegisterModel model)
         {
             var user = _mapper.Map<User>(model);
 
             try
             {
-                // Creates user
-                _userService.Create(user, model.Password);
+                // Creates the user and stores it in the database
+                _userRepository.Create(user, model.Password);
                 return Ok();
             }
-            catch (AppException ex)
-            {
-                return BadRequest(new { message = ex.Message });
-            }
-        }
-
-        [HttpGet("{id}")]
-        public IActionResult GetById(int id)
-        {
-            var user = _userService.GetById(id);
-            var model = _mapper.Map<UserModel>(user);
-            return Ok(model);
-        }
-
-        [HttpPut("{id}")]
-        public IActionResult Update(int id, [FromBody] UpdateModel model)
-        {
-            // map model to entity and set id
-            var user = _mapper.Map<User>(model);
-            user.Id = id;
-
-            try
-            {
-                // update user 
-                _userService.Update(user, model.Password);
-                return Ok();
-            }
-            catch (AppException ex)
+            catch (Exception ex)
             {
                 // return error message if there was an exception
                 return BadRequest(new { message = ex.Message });
             }
         }
 
+        // GET: api/User/1
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id)
+        {
+            // Gets the user from the database
+            var user = _userRepository.GetById(id);
+            var model = _mapper.Map<UserModel>(user);
+            return Ok(model);
+        }
+
+        // PUT: api/User/1
+        [HttpPut("{id}")]
+        [AuthorizeRoles(Role.Admin, Role.User)]
+        public IActionResult Update(int id, [FromBody] UpdateModel model)
+        {
+            var user = _mapper.Map<User>(model);
+            user.Id = id;
+
+            try
+            {
+                // Updates the user and stores it in the database
+                _userRepository.Update(user, model.Password);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                // return error message if there was an exception
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        // DELETE: api/User/1
         [HttpDelete("{id}")]
+        [Authorize(Roles = Role.Admin)]
         public IActionResult Delete(int id)
         {
-            _userService.Delete(id);
+            // Delets the user
+            _userRepository.Delete(id);
             return Ok();
         }
     }

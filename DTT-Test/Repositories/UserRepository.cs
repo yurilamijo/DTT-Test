@@ -1,28 +1,20 @@
 ﻿using DTT_Test.Helpers;
 using DTT_Test.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
-namespace DTT_Test.Services
+namespace DTT_Test.Repositories
 {
-    public interface IUserService
-    {
-        User Authenticate(string username, string password);
-        User GetById(int id);
-        User Create(User user, string password);
-        void Update(User user, string password = null);
-        void Delete(int id);
-    }
-
-    public class UserService : IUserService
+    public class UserRepository : IUserRepository
     {
         private readonly DTTContext _context;
-        public UserService(DTTContext context)
+
+        public UserRepository(DTTContext context)
         {
             _context = context;
         }
+
+        // Authenticates the user       
         public User Authenticate(string username, string password)
         {
             // Checks if parameters are not empty
@@ -40,15 +32,16 @@ namespace DTT_Test.Services
             return user;
         }
 
+        // Validates the given user data en creates a new user
         public User Create(User user, string password)
         {
             // Validates password
             if (string.IsNullOrWhiteSpace(password))
-                throw new AppException("Password is requred");
+                throw new ArgumentException("Password is requred");
 
             // Checks if username already exists
             if (_context.Users.Any(x => x.Username == user.Username))
-                throw new AppException("Username \"" + user.Username + "\" is already taken");
+                throw new ArgumentException("Username " + user.Username + " is already taken");
 
             byte[] passwordHash, passwordSalt;
             // Creates a hashed password
@@ -65,6 +58,7 @@ namespace DTT_Test.Services
             return user;
         }
 
+        // Deletes the user by id
         public void Delete(int id)
         {
             var user = _context.Users.Find(id);
@@ -76,11 +70,13 @@ namespace DTT_Test.Services
             }
         }
 
+        // Finds the user by id
         public User GetById(int id)
         {
             return _context.Users.Find(id);
         }
 
+        // Updates the user
         public void Update(User userParam, string password = null)
         {
             // Finds user by id
@@ -88,14 +84,14 @@ namespace DTT_Test.Services
 
             // Checks if user exists
             if (user == null) 
-                throw new AppException("User not found");
+                throw new ArgumentException("User not found");
 
             // update username if it has changed
             if (!string.IsNullOrWhiteSpace(userParam.Username) && userParam.Username != user.Username)
             {
                 // throw error if the new username is already taken
                 if (_context.Users.Any(x => x.Username == userParam.Username))
-                    throw new AppException("Username " + userParam.Username + " is already taken");
+                    throw new ArgumentException("Username " + userParam.Username + " is already taken");
 
                 user.Username = userParam.Username;
             }
@@ -120,6 +116,7 @@ namespace DTT_Test.Services
             _context.SaveChanges();
         }
 
+        // Encrypts the given password
         private static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
             // Validates password
@@ -136,6 +133,7 @@ namespace DTT_Test.Services
             }
         }
 
+        // Dencrypts the given password and checks if it's the same
         private static bool VerifyPasswordHash(string password, byte[] storedHash, byte[] storedSalt)
         {
             // Validates password

@@ -5,7 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace DTT_Test.Models
-{
+{    
+    /* User class */
     public class User
     {
         public int Id { get; set; }

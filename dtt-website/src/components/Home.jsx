@@ -1,6 +1,7 @@
 import React from 'react';
 import ArticleBlock from './article/ArticleBlock';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { APIPaths } from '../Constants';
 import '../css/Article.css';
 
 class Home extends React.Component {
@@ -13,7 +14,7 @@ class Home extends React.Component {
 
   componentDidMount() {
     // Calls the API to get the 5 recents articles
-    fetch("https://localhost:5001/api/articles")
+    fetch(APIPaths.allArticles)
       .then(response => response.json())
       .then((data) => this.setState(
         { articles: data }

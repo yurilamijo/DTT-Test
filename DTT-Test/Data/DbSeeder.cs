@@ -1,25 +1,23 @@
-﻿using AutoMapper;
-using DTT_Test.Models;
-using DTT_Test.Models.Users;
-using DTT_Test.Services;
-using System;
-using System.Collections.Generic;
+﻿using DTT_Test.Models;
+using DTT_Test.Repositories;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace DTT_Test.Data
 {
+    /* Database seeder thats inserts a new users */
     public class DbSeeder
     {
-        private static IUserService _userService;
+        private static IUserRepository _userRepository;
 
         public static void Initialize(DTTContext context)
         {
-            _userService = new UserService(context);
+            _userRepository = new UserRepository(context);
+            
+            // Checks if there are no records of users in the User table in the database
             if (!context.Users.Any())
             {
-                // Creates user
-                _userService.Create(new User { 
+                // Creates a Admin user
+                _userRepository.Create(new User { 
                     FirstName = "Yuri", 
                     Username = "YuriLamijo", 
                     PasswordHash = null, 
@@ -27,7 +25,8 @@ namespace DTT_Test.Data
                     Role = Role.Admin 
                 }, "DTT!Yuri");
 
-                _userService.Create(new User
+                // Creates a CMS user
+                _userRepository.Create(new User
                 {
                     FirstName = "CMSuser",
                     Username = "CMSuser",

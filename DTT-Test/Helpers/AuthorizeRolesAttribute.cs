@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace DTT_Test.Helpers
 {
+    /* Custom Authorize attribuut from multiple roles */
     public class AuthorizeRolesAttribute : AuthorizeAttribute
     {
         public AuthorizeRolesAttribute(params string[] roles) : base()

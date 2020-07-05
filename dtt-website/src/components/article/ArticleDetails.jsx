@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { formatDate } from '../../Helper';
+import { APIPaths } from '../../Constants';
 
 class Article extends React.Component {
     constructor(props) {
@@ -16,7 +17,7 @@ class Article extends React.Component {
         const { match: { params } } = this.props;
 
         // Calls the API to get the wanted artcile by ID
-        fetch(`https://localhost:5001/api/article/${params.id}`)
+        fetch(APIPaths.article + params.id)
         .then(response => response.json())
         .then((data) => { 
             this.setState({

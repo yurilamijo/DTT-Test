@@ -1,6 +1,6 @@
 /* Form */
 .form {
-    background-color: wheat;
+    background-color: #fff4cf;
     padding: 25px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);;
     border-radius: 5px;
@@ -9,8 +9,8 @@
 
 .form label {
     display: flex;
-    /* height: 2em; */
     margin: 20px 0 20px 0;
+    justify-content: space-between;
 }
 
 .form label p {
@@ -20,9 +20,17 @@
 }
 
 .form-input {
-    flex: 6;
+    flex: 3;
     border-radius: 5px;
-    background-color: lightcyan;
+    background-color: white;
+}
+
+.has-value {
+    background-color: #eeffee;
+}
+
+.form-input:focus {
+    box-shadow: 0px 1px 5px 2px #ef7d50;
 }
 
 .form-footer {
@@ -36,16 +44,26 @@
     width: 120px;
     color: white;
     font-weight: bold;
-    background-color: orange;
+    background-color: #ef7d50;
     border-radius: 5px;
     border-color: black;
 }
 
 .login {
-    width: 45%;
+    min-width: 45%;
 }
 
 .login-menu {
     display: flex;
     justify-content: center;
+}
+
+@media only screen and (max-width: 840px) {
+    .form label {
+        flex-direction: column;
+    }
+
+    .form label p {
+        text-align: initial;
+    }
 }
