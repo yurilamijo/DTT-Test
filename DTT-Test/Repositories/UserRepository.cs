@@ -35,11 +35,11 @@ namespace DTT_Test.Repositories
         {
             // Validates password
             if (string.IsNullOrWhiteSpace(password))
-                throw new AppException("Password is requred");
+                throw new ArgumentException("Password is requred");
 
             // Checks if username already exists
             if (_context.Users.Any(x => x.Username == user.Username))
-                throw new AppException("Username \"" + user.Username + "\" is already taken");
+                throw new ArgumentException("Username " + user.Username + " is already taken");
 
             byte[] passwordHash, passwordSalt;
             // Creates a hashed password
@@ -79,14 +79,14 @@ namespace DTT_Test.Repositories
 
             // Checks if user exists
             if (user == null) 
-                throw new AppException("User not found");
+                throw new ArgumentException("User not found");
 
             // update username if it has changed
             if (!string.IsNullOrWhiteSpace(userParam.Username) && userParam.Username != user.Username)
             {
                 // throw error if the new username is already taken
                 if (_context.Users.Any(x => x.Username == userParam.Username))
-                    throw new AppException("Username " + userParam.Username + " is already taken");
+                    throw new ArgumentException("Username " + userParam.Username + " is already taken");
 
                 user.Username = userParam.Username;
             }

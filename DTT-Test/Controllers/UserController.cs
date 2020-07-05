@@ -81,7 +81,7 @@ namespace DTT_Test.Controllers
                 _userRepository.Create(user, model.Password);
                 return Ok();
             }
-            catch (AppException ex)
+            catch (Exception ex)
             {
                 // return error message if there was an exception
                 return BadRequest(new { message = ex.Message });
@@ -109,7 +109,7 @@ namespace DTT_Test.Controllers
                 _userRepository.Update(user, model.Password);
                 return Ok();
             }
-            catch (AppException ex)
+            catch (Exception ex)
             {
                 // return error message if there was an exception
                 return BadRequest(new { message = ex.Message });
