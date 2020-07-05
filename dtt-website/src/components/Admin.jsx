@@ -3,6 +3,7 @@ import { Link, useRouteMatch } from 'react-router-dom';
 import { PreviewArticles } from './article/ArticlePreview';
 import NewsWidget from './NewsWidget';
 import { getUserRole } from '../Helper';
+import { APIPaths } from '../Constants';
 import '../css/Admin.css'
 class Admin extends React.Component {
     constructor(props) {
@@ -12,7 +13,7 @@ class Admin extends React.Component {
     
     componentDidMount() {
         // Calls the API to get the all the articles
-        fetch("https://localhost:5001/api/archive")
+        fetch(APIPaths.archive)
           .then(response => response.json())
           .then((data) => this.setState(
             { articles: data }

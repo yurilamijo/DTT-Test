@@ -1,7 +1,8 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import CustomInput from '../CustomeInput';
-import { formatDate, getToken, getUserRole } from '../../Helper';
+import { formatDate, getUserRole } from '../../Helper';
+import { AuthHeader, APIPaths } from '../../Constants';
 import '../../css/Form.css'
 
 class ArticleForm extends React.Component {
@@ -24,12 +25,9 @@ class ArticleForm extends React.Component {
         // Calls the API to get the selected article by ID
         // Will only be called if there was a ID als parameter
         if (params.id) {
-            fetch(`https://localhost:5001/api/article/${params.id}`, {
+            fetch(APIPaths.article + params.id, {
                 method: 'GET',
-                headers: { 
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${getToken()}`
-                },
+                headers: AuthHeader,
             })
             .then(response => response.json())
             .then((data) => {
@@ -59,16 +57,13 @@ class ArticleForm extends React.Component {
         event.preventDefault();
         const { match: { params } } = this.props;
         const callMethod = params.id ? 'PUT' : 'POST';
-        let str = 'https://localhost:5001/api/article';
+        let str = APIPaths.article;
         // If method is PUT the call will be converted to a PUT call
-        if (callMethod == 'PUT') str += `/${params.id}`;
+        if (callMethod == 'PUT') str += `${params.id}`;
         // API call that can be a POST or a PUT call
         fetch(str, {
             method: callMethod,
-            headers: { 
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${getToken()}`
-            },
+            headers: AuthHeader,
             body: JSON.stringify(this.state),
         })
         .then(
@@ -84,12 +79,9 @@ class ArticleForm extends React.Component {
         event.preventDefault();
         const { match: { params } } = this.props;
         // API call that deletes the selected article by ID
-        fetch('https://localhost:5001/api/article/' + params.id,{
+        fetch(APIPaths.article + params.id,{
             method: 'DELETE',
-            headers: { 
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${getToken()}`
-            }
+            headers: AuthHeader
         })
         .then(
             // Redirects you to the admin page
@@ -117,10 +109,37 @@ class ArticleForm extends React.Component {
             <div className="article-form">
                 <h1>{pageTitle} Article</h1>
                 <form className="form" onSubmit={this.submitArticle}>
-                    <CustomInput lableName="Article Title" inputName="title" value={title} inputType={"text"} handleChange={this.handleChange}/>
-                    <CustomInput lableName="Article Summary" inputName="summary" value={summary} inputType={"textarea"} handleChange={this.handleChange}/>
-                    <CustomInput lableName="Article Content" inputName="description" value={description} inputType={"textarea"} handleChange={this.handleChange}/>
-                    <CustomInput lableName="Publication Date" inputName="publishDate" value={publishDate} inputType={"date"} handleChange={this.handleChange}/>
+                    <CustomInput 
+                        lableName="Article Title" 
+                        inputName="title" 
+                        value={title} 
+                        inputType={"text"}
+                        placeholder="Name of the article" 
+                        handleChange={this.handleChange}
+                    />
+                    <CustomInput 
+                        lableName="Article Summary" 
+                        inputName="summary" 
+                        value={summary} 
+                        inputType={"textarea"} 
+                        placeholder="Summary of the article" 
+                        handleChange={this.handleChange}
+                    />
+                    <CustomInput 
+                        lableName="Article Content" 
+                        inputName="description" 
+                        value={description} 
+                        inputType={"textarea"} 
+                        placeholder="Content of the article" 
+                        handleChange={this.handleChange}
+                    />
+                    <CustomInput 
+                        lableName="Publication Date" 
+                        inputName="publishDate" 
+                        value={publishDate} 
+                        inputType={"date"} 
+                        handleChange={this.handleChange}
+                    />
                     <div className="form-footer">
                         <button type="submit">Save Changes</button>
                         <button>Cancel</button>

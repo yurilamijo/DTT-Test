@@ -1,5 +1,6 @@
 import React from 'react';
 import CustomInput from './CustomeInput';
+import { APIPaths } from '../Constants';
 import '../css/Form.css';
 
 class LoginMenu extends React.Component {
@@ -29,7 +30,7 @@ class LoginMenu extends React.Component {
         const {username, password} = this.state;
 
         // Authenticates the user
-        fetch('https://localhost:5001/api/auth/',{
+        fetch(APIPaths.login, {
             method: 'POST',
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify({username, password})
@@ -60,8 +61,20 @@ class LoginMenu extends React.Component {
         return(
             <div className="login-menu">
                 <form className="form login" onSubmit={this.login}>
-                    <CustomInput lableName="Username" inputName="username" inputType={"text"} handleChange={this.handleChange}/>
-                    <CustomInput lableName="Password" inputName="password" inputType={"password"} handleChange={this.handleChange}/>
+                    <CustomInput 
+                        lableName="Username" 
+                        inputName="username" 
+                        inputType={"text"}
+                        placeholder="Your username"
+                        handleChange={this.handleChange}
+                    />
+                    <CustomInput 
+                        lableName="Password" 
+                        inputName="password" 
+                        inputType={"password"}
+                        placeholder="Your password"
+                        handleChange={this.handleChange}
+                    />
                    <div className="form-footer">
                        <button type="submit">Login</button>
                     </div>

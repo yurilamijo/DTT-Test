@@ -9,7 +9,10 @@ function formatDate(date, typeYear, typeMonth, typeDay, seperator) {
 
 // Returns the JWT token
 function getToken() {
-    const token = JSON.parse(localStorage.getItem('user')).token;
+    let token;
+    if (localStorage.getItem('user')) {
+        token = JSON.parse(localStorage.getItem('user')).token;
+    }
     return token;
 }
 

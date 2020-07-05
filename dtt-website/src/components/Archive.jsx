@@ -1,6 +1,7 @@
 import React from 'react';
 import ArticleBlock from './article/ArticleBlock';
 import { Link } from 'react-router-dom';
+import { APIPaths } from '../Constants';
 
 class Archive extends React.Component {
     constructor(props) {
@@ -12,7 +13,7 @@ class Archive extends React.Component {
 
     componentDidMount() {
         // Gets every article
-        fetch("https://localhost:5001/api/archive")
+        fetch(APIPaths.archive)
         .then(response => response.json())
         .then((data) => this.setState(
             { archive: data}
