@@ -14,6 +14,7 @@ namespace DTT_Test.Repositories
             _context = context;
         }
 
+        // Authenticates the user       
         public User Authenticate(string username, string password)
         {
             // Checks if parameters are not empty
@@ -31,6 +32,7 @@ namespace DTT_Test.Repositories
             return user;
         }
 
+        // Validates the given user data en creates a new user
         public User Create(User user, string password)
         {
             // Validates password
@@ -56,6 +58,7 @@ namespace DTT_Test.Repositories
             return user;
         }
 
+        // Deletes the user by id
         public void Delete(int id)
         {
             var user = _context.Users.Find(id);
@@ -67,11 +70,13 @@ namespace DTT_Test.Repositories
             }
         }
 
+        // Finds the user by id
         public User GetById(int id)
         {
             return _context.Users.Find(id);
         }
 
+        // Updates the user
         public void Update(User userParam, string password = null)
         {
             // Finds user by id
@@ -111,6 +116,7 @@ namespace DTT_Test.Repositories
             _context.SaveChanges();
         }
 
+        // Encrypts the given password
         private static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
             // Validates password
@@ -127,6 +133,7 @@ namespace DTT_Test.Repositories
             }
         }
 
+        // Dencrypts the given password and checks if it's the same
         private static bool VerifyPasswordHash(string password, byte[] storedHash, byte[] storedSalt)
         {
             // Validates password

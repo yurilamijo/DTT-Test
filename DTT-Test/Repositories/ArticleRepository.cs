@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DTT_Test.Models;
@@ -17,50 +18,50 @@ namespace DTT_Test.Repositories
 
         public async Task<Article> GetById(int id)
         {
-            // Finds a article by id
+            // Finds the article by id
             return await _context.Article.FindAsync(id);
         }
 
+        // Finds every article
         public async Task<IEnumerable<Article>> GetAll()
         {
-            // Finds every article
             return await _context.Article
                 .OrderByDescending(a => a.PublishDate)
                 .ToListAsync();
         }
 
+        // Finds the 5 most recents articles
         public async Task<IEnumerable<Article>> GetRecentArticles()
         {
-            // Finds the 5 most recents articles
             return await _context.Article
                 .OrderByDescending(a => a.PublishDate)
                 .Take(5)
                 .ToListAsync();
         }
 
+        // Checks if the article exists
         public async Task<bool> ArticleExists(int id)
         {
-            // Checks if the article exists
             return await _context.Article.AnyAsync(e => e.Id == id);
         }
 
+        // Creates a new article and saves it in the database
         public async Task Create(Article article)
         {
-            // Saves the article to the database
             _context.Article.Add(article);
             await _context.SaveChangesAsync();
         }
 
+        // Removes the article from the database
         public async Task Delete(Article article)
         {
-            // Removes the article from the database
             _context.Article.Remove(article);
             await _context.SaveChangesAsync();
         }
 
+        // Updates the article with the given data and saves it in the database
         public async Task Update(Article article)
         {
-            // Updates the article from the database
             _context.Entry(article).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }

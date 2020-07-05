@@ -18,6 +18,7 @@ class ArticleForm extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.submitArticle = this.submitArticle.bind(this);
         this.deleteArticle = this.deleteArticle.bind(this);
+        this.handleCancel = this.handleCancel.bind(this);
     }
 
     componentDidMount() {
@@ -92,8 +93,13 @@ class ArticleForm extends React.Component {
         );
     }
 
+    handleCancel(event) {
+        event.preventDefault();
+        this.props.history.push('/admin')
+    }
+
     render() {
-        const {title, summary, description, publishDate} = this.state;
+        const { title, summary, description, publishDate } = this.state;
         const { match: { params } } = this.props;
 
         let pageTitle, deleteLink;
@@ -142,7 +148,7 @@ class ArticleForm extends React.Component {
                     />
                     <div className="form-footer">
                         <button type="submit">Save Changes</button>
-                        <button>Cancel</button>
+                        <button onClick={this.handleCancel}>Cancel</button>
                     </div>
                 </form>
                 {getUserRole() == "Admin" ? deleteLink : null}

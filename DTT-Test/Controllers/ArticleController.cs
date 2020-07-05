@@ -59,8 +59,6 @@ namespace DTT_Test.Controllers
         }
 
         // PUT: api/Article/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
         [AuthorizeRoles(Role.Admin, Role.User)]
         public async Task<IActionResult> PutArticleAsync(int id, [Bind("Title, Summary, Description, PublishDate")] Article article)
@@ -69,7 +67,7 @@ namespace DTT_Test.Controllers
             if (id != article.Id)
             {
                 // return error message if there was an exception
-                return BadRequest();
+                return BadRequest(new { message = "Given id article is not the same of the article object" });
             }
 
             // Checks if the model is valid
@@ -85,7 +83,7 @@ namespace DTT_Test.Controllers
                     if (!await _artcileRepository.ArticleExists(id))
                     {
                         // return error message if there was an exception
-                        return NotFound();
+                        return NotFound(new { message = "Given article not found" });
                     }
                     else
                     {
@@ -93,14 +91,16 @@ namespace DTT_Test.Controllers
                     }
                 }
             }
+            else
+            {
+                return BadRequest(new { message = "Given changes are not accepted" });
+            }
 
             // return error message if there was no article
             return NoContent();
         }
 
         // POST: api/Article
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
         [Authorize(Roles = Role.Admin)]
         public async Task<ActionResult<Article>> PostArticleAsync([Bind("Title, Summary, Description, PublishDate")] Article article)
@@ -128,7 +128,7 @@ namespace DTT_Test.Controllers
             if (article == null)
             {
                 // return error message if there was no article
-                return NotFound();
+                return NotFound(new { message = "Given article not found" });
             }
 
             // Deletes the article form the database

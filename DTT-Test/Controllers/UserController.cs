@@ -30,6 +30,7 @@ namespace DTT_Test.Controllers
             _appSettings = appSettings.Value;
         }
 
+        // POST: api/Auth
         [AllowAnonymous]
         [HttpPost("/api/auth")]
         public IActionResult Authenticate([FromBody] AuthenticateModel model)
@@ -69,8 +70,9 @@ namespace DTT_Test.Controllers
             });
         }
 
-        [AllowAnonymous]
+        // POST: api/Register
         [HttpPost("/api/register")]
+        [Authorize(Roles = Role.Admin)]
         public IActionResult Register([FromBody] RegisterModel model)
         {
             var user = _mapper.Map<User>(model);
@@ -88,6 +90,7 @@ namespace DTT_Test.Controllers
             }
         }
 
+        // GET: api/User/1
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
@@ -97,7 +100,9 @@ namespace DTT_Test.Controllers
             return Ok(model);
         }
 
+        // PUT: api/User/1
         [HttpPut("{id}")]
+        [AuthorizeRoles(Role.Admin, Role.User)]
         public IActionResult Update(int id, [FromBody] UpdateModel model)
         {
             var user = _mapper.Map<User>(model);
@@ -116,7 +121,9 @@ namespace DTT_Test.Controllers
             }
         }
 
+        // DELETE: api/User/1
         [HttpDelete("{id}")]
+        [Authorize(Roles = Role.Admin)]
         public IActionResult Delete(int id)
         {
             // Delets the user
