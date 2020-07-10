@@ -1,10 +1,3 @@
-import { getToken } from './Helper';
-
-export const AuthHeader = {
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${ getToken()}`
-};
-  
 const url = 'https://localhost:5001';
 
 export const APIPaths = {

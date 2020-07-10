@@ -53,7 +53,7 @@ CREATE TABLE `article` (
   `Description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `PublishDate` datetime(6) NOT NULL,
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -62,7 +62,7 @@ CREATE TABLE `article` (
 
 LOCK TABLES `article` WRITE;
 /*!40000 ALTER TABLE `article` DISABLE KEYS */;
-INSERT INTO `article` VALUES (2,'DTT Test','Test user authentication','fg','2020-06-19 00:00:00.000000'),(3,'Test CMSuser change','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis vitae augue id erat euismod pulvinar sed ac lectus. Mauris egestas quam sed diam fermentum condimentum.','Testen voor DTT','2020-06-19 00:00:00.000000'),(4,'Stage ASP.NET Core DTT','Stage vacaturen ASP.NET Core developer DTT','Belangrijke eigenschappen','2020-06-24 00:00:00.000000'),(5,'Meerdere testen','Meerdere teste om te checken of alles nog werkt','Test voor werking','2020-06-28 00:00:00.000000'),(6,'Hallo regex yuri Test 4','Test Test\nTest\n3 Test','Hallo ik ben Yuri Lamijo en ben 21 jaar','2020-06-18 00:00:00.000000'),(8,'Laatste Test','Laatste Test Yuri','Laatste Test DTT','2020-06-23 00:00:00.000000'),(9,'Yuri DTT Test validation','Yuri Lamijo Regex testen\nVia regex website','Hallo ik ben Yuri 21 jaar','2020-07-01 00:00:00.000000'),(12,'Lorem ipsum dolor sit amet, consectetur adipiscing elit.','Lorem ipsum dolor sit amet, consectetur adipiscing elit.','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis vitae augue id erat euismod pulvinar sed ac lectus. Mauris egestas quam sed diam fermentum condimentum. Nullam vehicula odio eros, eu malesuada erat interdum ac. Donec sed ipsum eget ex mattis sollicitudin. Nulla sodales libero porta fringilla auctor. Nam sed libero eu ante vestibulum dignissim. Vivamus eu diam ultrices, feugiat libero et, consequat mauris. Maecenas in leo ut nulla tempus efficitur. Aliquam vestibulum augue condimentum lectus vestibulum, non congue ex malesuada. Vivamus et neque enim. Donec a libero erat. Nulla congue in erat vel elementum. Nullam vitae turpis ut neque tempus placerat in sit amet massa. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vel erat luctus, semper est sed, facilisis quam. Sed hendrerit sit amet tellus non lobortis. ','2020-07-03 00:00:00.000000');
+INSERT INTO `article` VALUES (2,'DTT Test','Test user authentication','fg','2020-06-19 00:00:00.000000'),(3,'Test CMSuser change','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis vitae augue id erat euismod pulvinar sed ac lectus. Mauris egestas quam sed diam fermentum condimentum.','Testen voor DTT','2020-06-19 00:00:00.000000'),(4,'Stage ASP.NET Core DTT','Stage vacaturen ASP.NET Core developer DTT','Belangrijke eigenschappen','2020-06-24 00:00:00.000000'),(5,'Meerdere testen','Meerdere teste om te checken of alles nog werkt','Test voor werking','2020-06-28 00:00:00.000000'),(6,'Hallo regex yuri Test 4','Test Test\nTest\n3 Test','Hallo ik ben Yuri Lamijo en ben 21 jaar','2020-06-18 00:00:00.000000'),(8,'Laatste Test','Laatste Test Yuri','Laatste Test DTT','2020-06-23 00:00:00.000000'),(9,'Yuri DTT Test validation','Yuri Lamijo Regex testen\nVia regex website','Hallo ik ben Yuri 21 jaar','2020-07-01 00:00:00.000000'),(12,'Lorem ipsum dolor sit amet, consectetur adipiscing elit.','Lorem ipsum dolor sit amet, consectetur adipiscing elit.','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis vitae augue id erat euismod pulvinar sed ac lectus. Mauris egestas quam sed diam fermentum condimentum. Nullam vehicula odio eros, eu malesuada erat interdum ac. Donec sed ipsum eget ex mattis sollicitudin. Nulla sodales libero porta fringilla auctor. Nam sed libero eu ante vestibulum dignissim. Vivamus eu diam ultrices, feugiat libero et, consequat mauris. Maecenas in leo ut nulla tempus efficitur. Aliquam vestibulum augue condimentum lectus vestibulum, non congue ex malesuada. Vivamus et neque enim. Donec a libero erat. Nulla congue in erat vel elementum. Nullam vitae turpis ut neque tempus placerat in sit amet massa. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vel erat luctus, semper est sed, facilisis quam. Sed hendrerit sit amet tellus non lobortis. ','2020-07-03 00:00:00.000000'),(16,'Yuri testen DTT 2','DTT testen','hjkhjk','2020-07-10 00:00:00.000000');
 /*!40000 ALTER TABLE `article` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -81,7 +81,7 @@ CREATE TABLE `users` (
   `PasswordHash` longblob NOT NULL,
   `PasswordSalt` longblob NOT NULL,
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -90,7 +90,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Yuri','YuriLamijo','Admin',_binary '¢:}mE\ß\âÖ§}\ßXt\Ím½R=­£\Ûs².‰†	d\ØW\ã„\Ñ\ê\ÓFùzf‡5W\ÎÛœ‚³ð|\Óiû\âuû',_binary '‡XX\"r\\0k\Ö\r\åi\Û.\ãZMû‡\0\à!\Ð\\dl\É6¶»\ÄZpƒŒ#õ…—»Ý«à¥œ+/Cr\\\"Ï”y^fš\É£Yu;\\M²K)¼¿\ÝþV­ \Z…ògN\ÇMü2,\ÕO o\Ü_Gõ{4\îd\\Ÿ¦\Ü#\ì\è\Ö\áK¿H±X;'),(2,'CMSuser','CMSuser','User',_binary 'd+L‘]\ß\Ñ8\ÎxiŽö7£L¡#\ê\ê}¥˜\Û&W¥c¯õOAÍ³ý„\äH$(9´hu\'þböU\"ù\Â\Å6±:',_binary '\Ä\è‹A„\îÁ )gL5@vùq91¯n÷\ëE¯\îÊ–`/\n\ß\íö»®’q	¤ n¿‘3s7å¯ŠUÍ©\Þ;·Ù8zl.\í:–6ö\Ý~m\Ñ*\ïUª8\Ë\Ón9÷h\É=¢»>±½\ÑÙß\Ûc\æ2i\çPFó\ÕGo\Ì1‘z'),(3,'Tester','TestUser','User',_binary '\0\æ9LMd)<G>²Œ¥g€\ï6 B\\\Z_øô¥”U££C®†Â—²÷¥\ÕÐ˜gÐ®·hSZR	Ë¾`Y\ÉU',_binary '¾…Š—ò\Ù\ì@†:ºd\Öø®ƒ>%\å5\Öö?©\Ëp§¹¬\ÚYN„\Ô\n:]\ßNÖ¹ÀwÐ©9‘]†x|ºaº\Øü\ËÆ™\Ã\è\Â\ÝC\\ªš®M­GN‚\ÕKs¶Û®WŽF\ÏB‹}¸ß«6ø{\ÍZÖ¡Ô©\ÄDy3\ä†\rúu<	ðï§—\Ó;\Ò');
+INSERT INTO `users` VALUES (1,'Yuri','YuriLamijo','Admin',_binary 'C‰wI\á\ã©\×\Úg\\8)©\ê\âÐ‹|L\éz©–\"D{@`–>',_binary 'M=§\ç\å(ž{ómQ¼±Jù\Þo#¸\\,?ÿ³¤^}KŠpRj¶Á·j»³ª”’õ^iÊ·bó~õ#È¤]^ù\ÓN'),(2,'CMSuser','CMSuser','User',_binary 'À\Ç°¥–Œ/wr˜^¢ˆ$\Ù­¢\Ékd¹KðYJ\\—Œ',_binary 'ôðe]ˆnJp}tÐ€\ë>	þÿ\0C\ì\Å\ÊXCÎ™-nN\ã	‘d\à‡U²×½“Ì¼uS\Ð\0	\ìšû!\Ü?t¥\áR\"');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -103,4 +103,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-07-05 21:30:34
+-- Dump completed on 2020-07-11  0:00:42

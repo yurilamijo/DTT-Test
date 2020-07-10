@@ -126,7 +126,7 @@ namespace DTT_Test.Repositories
                 throw new ArgumentException("Value cannot be empty or whitespace only string.", "password");
 
             // Hashing the password
-            using (var hmac = new System.Security.Cryptography.HMACSHA512())
+            using (var hmac = new System.Security.Cryptography.HMACSHA256())
             {
                 passwordSalt = hmac.Key;
                 passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
@@ -141,12 +141,12 @@ namespace DTT_Test.Repositories
                 throw new ArgumentNullException("password");
             if (string.IsNullOrWhiteSpace(password)) 
                 throw new ArgumentException("Value cannot be empty or whitespace only string.", "password");
-            if (storedHash.Length != 64) 
-                throw new ArgumentException("Invalid length of password hash (64 bytes expected).", "passwordHash");
-            if (storedSalt.Length != 128) 
-                throw new ArgumentException("Invalid length of password salt (128 bytes expected).", "passwordHash");
+            if (storedHash.Length != 32) 
+                throw new ArgumentException("Invalid length of password hash (32 bytes expected).", "passwordHash");
+            if (storedSalt.Length != 64) 
+                throw new ArgumentException("Invalid length of password salt (64 bytes expected).", "passwordHash");
 
-            using (var hmac = new System.Security.Cryptography.HMACSHA512(storedSalt))
+            using (var hmac = new System.Security.Cryptography.HMACSHA256(storedSalt))
             {
                 // Hashing the input password
                 var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
