@@ -1,8 +1,8 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import CustomInput from '../CustomeInput';
-import { formatDate, getUserRole } from '../../Helper';
-import { AuthHeader, APIPaths } from '../../Constants';
+import { formatDate, getToken, getUserRole } from '../../Helper';
+import { APIPaths } from '../../Constants';
 import '../../css/Form.css'
 
 class ArticleForm extends React.Component {
@@ -28,7 +28,10 @@ class ArticleForm extends React.Component {
         if (params.id) {
             fetch(APIPaths.article + params.id, {
                 method: 'GET',
-                headers: AuthHeader,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${ getToken()}`
+                },
             })
             .then(response => response.json())
             .then((data) => {
@@ -64,7 +67,10 @@ class ArticleForm extends React.Component {
         // API call that can be a POST or a PUT call
         fetch(str, {
             method: callMethod,
-            headers: AuthHeader,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${ getToken()}`
+            },
             body: JSON.stringify(this.state),
         })
         .then(
@@ -82,7 +88,10 @@ class ArticleForm extends React.Component {
         // API call that deletes the selected article by ID
         fetch(APIPaths.article + params.id,{
             method: 'DELETE',
-            headers: AuthHeader
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${ getToken()}`
+            }
         })
         .then(
             // Redirects you to the admin page
@@ -151,7 +160,7 @@ class ArticleForm extends React.Component {
                         <button onClick={this.handleCancel}>Cancel</button>
                     </div>
                 </form>
-                {getUserRole() == "Admin" ? deleteLink : null}
+                { getUserRole() == "Admin" ? deleteLink : null }
             </div>  
         )
     }
